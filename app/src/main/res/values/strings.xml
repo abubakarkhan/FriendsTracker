@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Friends Tracker</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="add_new_meeting">Add New Meeting</string>
+    <string name="location">Location: </string>
+    <string name="meeting_start_time">Start Time: </string>
+    <string name="meeting_end_time">End Time: </string>
+    <string name="email_label">Email: </string>
+    <string name="dob_label">Date of birth: </string>
+    <string name="meeting_date">Date: </string>
+    <string name="meeting_title">Title: </string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="sort_by_date_desc">Sort: Date (Descending)</string>
+    <string name="sort_by_date_ascending">Sort: Date (Ascending)</string>
+</resources>
