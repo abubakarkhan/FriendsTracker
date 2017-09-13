@@ -56,6 +56,7 @@ public class MeetingData {
             meetingArrayList.add(new Meeting("Chai Meetup",new Date(2017-1900,9,1,10,30),new Date(2017-1900,9,1,11,30),"Lat-34.12, Lon-144.12"));
             meetingArrayList.add(new Meeting("Coffee Meetup",new Date(2017-1900,9,2,10,30),new Date(2017-1900,9,1,11,30),"Lat-34.12, Lon-144.12"));
             meetingArrayList.add(new Meeting("Design Meeting",new Date(2017-1900,9,3,10,30),new Date(2017-1900,9,1,11,30),"Lat-34.12, Lon-144.12"));
+            meetingArrayList.add(new Meeting("Design Meeting",new Date(2017-1900,9,3,10,30),new Date(2017-1900,9,1,11,30),"Lat-34.12, Lon-144.12"));
             dataAdded = true;
         }
     }
