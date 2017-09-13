@@ -55,6 +55,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/email_label"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/nameTextView" />
 
@@ -66,6 +67,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/dob_label"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/emailLabelTV" />
 
@@ -82,7 +84,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/guideline2"
         android:layout_marginRight="8dp"
-        app:layout_constraintHorizontal_bias="1.0" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintVertical_bias="0.5" />
 
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"

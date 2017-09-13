@@ -2,9 +2,9 @@
 <resources>
     <color name="colorPrimary">#ea2c0b</color>
     <color name="colorPrimaryDark">#751605</color>
-    <color name="colorAccent">#2BC0CF</color>
-    <color name="backgroundColor">#EAFAF1</color>
-    <color name="main_btn_backgrounds">#2BC0CF</color>
+    <color name="colorAccent">#21618C</color>
+    <color name="backgroundColor">#F6DDCC</color>
+    <color name="main_btn_backgrounds">#21618C</color>
     <color name="main_btn_text">#FFFFFF</color>
     <color name="navigation_bar">#D6EAF8</color>
 </resources>
