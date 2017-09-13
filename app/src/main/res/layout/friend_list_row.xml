@@ -5,37 +5,36 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="5dp"
+
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="81dp">
 
-    <TextView
+     <TextView
         android:id="@+id/nameTextView"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="16dp"
+         android:layout_marginTop="13dp"
         android:text="TextView"
         android:textAlignment="textStart"
-        android:textSize="18sp"
+        android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+         app:layout_constraintTop_toTopOf="parent"
+         android:layout_marginLeft="8dp"
+         app:layout_constraintLeft_toLeftOf="@+id/guideline2"
+         android:layout_marginRight="8dp"
+         app:layout_constraintRight_toRightOf="parent"
+         app:layout_constraintHorizontal_bias="0.0" />
 
     <TextView
         android:id="@+id/emailTextView"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:text="TextView"
-        android:textColor="@color/colorAccent"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/emailLabelTV"
-        app:layout_constraintLeft_toRightOf="@+id/emailLabelTV"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintLeft_toRightOf="@+id/emailLabelTV" />
 
     <TextView
         android:id="@+id/birthdayTextView"
@@ -43,7 +42,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:text="TextView"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/dobLabelTV"
         app:layout_constraintLeft_toRightOf="@+id/dobLabelTV" />
 
@@ -51,22 +51,44 @@
         android:id="@+id/emailLabelTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/email_label"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/nameTextView" />
 
     <TextView
         android:id="@+id/dobLabelTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:text="@string/dob_label"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/emailTextView" />
+        android:text="@string/dob_label"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/emailLabelTV" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/friend"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/guideline2"
+        android:layout_marginRight="8dp"
+        app:layout_constraintHorizontal_bias="1.0" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline2"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.25" />
 
 </android.support.constraint.ConstraintLayout>
