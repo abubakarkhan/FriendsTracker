@@ -8,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.abubakar.friendstracker.Model.Friend;
-import com.abubakar.friendstracker.Model.FriendData;
 import com.abubakar.friendstracker.Model.Meeting;
 import com.abubakar.friendstracker.R;
 
@@ -64,16 +63,11 @@ public class MeetingListAdapter extends BaseAdapter {
         startTime.setText(timeFormat.format(meetingArrayList.get(i).getStartTime()));
         endTime.setText(timeFormat.format(meetingArrayList.get(i).getEndTime()));
         for (Friend friend: meetingArrayList.get(i).getMeetingAttendees()){
-                for (Friend f: FriendData.getInstance().getFriendArrayList()){
-                    if (friend.getID().equalsIgnoreCase(f.getID())){
-                        friendsAttending += "- " + friend.getName() + "\n";
-                    }
-                }
+            friendsAttending += "- " + friend.getName() + "\n";
         }
         if (friendsAttending.trim().equals("")){
             attendeesList.setText(R.string.no_friend_added_meeting);
         }else {
-
             attendeesList.setText(friendsAttending);
         }
         v.setTag(meetingArrayList.get(i).getMeetingID());
