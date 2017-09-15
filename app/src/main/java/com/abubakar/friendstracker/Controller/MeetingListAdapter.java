@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.abubakar.friendstracker.Model.Friend;
+import com.abubakar.friendstracker.Model.FriendData;
 import com.abubakar.friendstracker.Model.Meeting;
 import com.abubakar.friendstracker.R;
 
@@ -49,16 +51,31 @@ public class MeetingListAdapter extends BaseAdapter {
         TextView meetingDate = v.findViewById(R.id.meetingDateRowTV);
         TextView startTime = v.findViewById(R.id.startTimeRowTV);
         TextView endTime = v.findViewById(R.id.endTimeRowTV);
+        TextView attendeesList = v.findViewById(R.id.tv_attendeesListString);
 
         DateFormat dateFormat = new SimpleDateFormat("MMM,dd,yyyy");
         DateFormat timeFormat = new SimpleDateFormat("hh:mm");
+
+        String friendsAttending = "";
 
         meetingTitle.setText(meetingArrayList.get(i).getTitle());
         meetingLocation.setText(meetingArrayList.get(i).getLocation());
         meetingDate.setText(dateFormat.format(meetingArrayList.get(i).getStartTime()));
         startTime.setText(timeFormat.format(meetingArrayList.get(i).getStartTime()));
         endTime.setText(timeFormat.format(meetingArrayList.get(i).getEndTime()));
+        for (Friend friend: meetingArrayList.get(i).getMeetingAttendees()){
+                for (Friend f: FriendData.getInstance().getFriendArrayList()){
+                    if (friend.getID().equalsIgnoreCase(f.getID())){
+                        friendsAttending += "- " + friend.getName() + "\n";
+                    }
+                }
+        }
+        if (friendsAttending.trim().equals("")){
+            attendeesList.setText(R.string.no_friend_added_meeting);
+        }else {
 
+            attendeesList.setText(friendsAttending);
+        }
         v.setTag(meetingArrayList.get(i).getMeetingID());
         return v;
     }

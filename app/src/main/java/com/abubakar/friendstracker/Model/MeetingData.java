@@ -45,18 +45,14 @@ public class MeetingData {
         }
         return meetingArrayList;
     }
-    public void addNewMeeting(String title, Date startTime, Date endTime, String location){
-        meetingArrayList.add(new Meeting(title,startTime,endTime,location));
+    public void addNewMeeting(Meeting meeting){
+        meetingArrayList.add(meeting);
     }
-    public void addMeetingFriend(Meeting meeting,String friendID){
-        meeting.addFriendToMeeting(friendID);
-    }
+
     public void addSampleMeeting(){
         if(!dataAdded){
             meetingArrayList.add(new Meeting("Chai Meetup",new Date(2017-1900,9,1,10,30),new Date(2017-1900,9,1,11,30),"Lat-34.12, Lon-144.12"));
             meetingArrayList.add(new Meeting("Coffee Meetup",new Date(2017-1900,9,2,10,30),new Date(2017-1900,9,1,11,30),"Lat-34.12, Lon-144.12"));
-            meetingArrayList.add(new Meeting("Design Meeting",new Date(2017-1900,9,3,10,30),new Date(2017-1900,9,1,11,30),"Lat-34.12, Lon-144.12"));
-            meetingArrayList.add(new Meeting("Design Meeting",new Date(2017-1900,9,3,10,30),new Date(2017-1900,9,1,11,30),"Lat-34.12, Lon-144.12"));
             dataAdded = true;
         }
     }

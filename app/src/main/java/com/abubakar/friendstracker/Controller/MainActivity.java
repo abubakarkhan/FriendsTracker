@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         Button addNewFriend = (Button)findViewById(R.id.addFreindBtn);
         Button importContactsBtn = (Button) findViewById(R.id.importContactsBtn);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        //List View
         list = (ListView) findViewById(R.id.friendListView);
         adapter = new FriendListAdapter(getApplicationContext(), FriendData.getInstance().getFriendArrayList());
         list.setAdapter(adapter);

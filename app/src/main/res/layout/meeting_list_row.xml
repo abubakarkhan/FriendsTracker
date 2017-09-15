@@ -25,40 +25,33 @@
         android:id="@+id/locationLabelTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
         android:text="@string/location"
         android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/meetingTitleRowTV"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="@+id/guideline4" />
+        app:layout_constraintLeft_toLeftOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/meetingTitleRowTV" />
 
     <TextView
         android:id="@+id/startTimeLabelTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
         android:text="@string/meeting_start_time"
         android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/meetingDateLabelTV"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="@+id/guideline4" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/meetingDateLabelTV" />
 
     <TextView
         android:id="@+id/endTimeLabelTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
         android:text="@string/meeting_end_time"
         android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/startTimeLabelTV"
-        app:layout_constraintVertical_bias="0.0"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="@+id/guideline4" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/startTimeRowTV"
+        app:layout_constraintLeft_toRightOf="@+id/startTimeRowTV" />
 
     <TextView
         android:id="@+id/locationRowTV"
@@ -96,13 +89,12 @@
         android:id="@+id/meetingDateLabelTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
         android:text="@string/meeting_date"
         android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/locationLabelTV"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="@+id/guideline4" />
+        app:layout_constraintLeft_toLeftOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/locationLabelTV" />
 
     <TextView
         android:id="@+id/meetingDateRowTV"
@@ -119,15 +111,15 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:src="@drawable/meeting"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="13dp"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/guideline4"
         android:layout_marginRight="8dp"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintTop_toTopOf="@+id/meetingTitleRowTV"
+        android:layout_marginTop="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/meetingDateLabelTV"
+        android:layout_marginBottom="0dp" />
 
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"
@@ -135,4 +127,31 @@
         android:id="@+id/guideline4"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.25" />
+
+    <TextView
+        android:id="@+id/tv_attendeesListRowLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/attendees"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/startTimeLabelTV"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/tv_attendeesListString"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="0dp"
+        android:text="@string/no_friend_added_meeting"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_attendeesListRowLabel"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toRightOf="@+id/tv_attendeesListRowLabel"
+        app:layout_constraintRight_toRightOf="@+id/endTimeRowTV" />
 </android.support.constraint.ConstraintLayout>

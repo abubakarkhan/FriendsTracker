@@ -33,7 +33,7 @@ public class FriendData {
             friendArrayList.add(new Friend("Eddard Stark","ned@email.com",new Date(1987-1900,5,1)));
             friendArrayList.add(new Friend("Arya Stark","arya@email.com",new Date(1995-1900,5,1)));
             friendArrayList.add(new Friend("Sansa Stark","arya@email.com",new Date(1992-1900,2,12)));
-            friendArrayList.add(new Friend("Jon Snow","jon@email.com",new Date(1989-1900,11,1)));
+            friendArrayList.add(new Friend("Jamie Lannister","jamie@email.com",new Date(1989-1900,11,1)));
             dataAdded = true;
         }
 

@@ -11,7 +11,7 @@ public class Meeting {
     private Date startTime;
     private Date endTime;
     private String location;
-    private ArrayList<String> meetingFriendsID = new ArrayList<>();
+    private ArrayList<Friend> meetingAttendees = new ArrayList<>();
     private static int counter = 0;
 
     public Meeting(String title, Date startTime, Date endTime, String location) {
@@ -26,15 +26,25 @@ public class Meeting {
         this.endTime = endTime;
         this.location = location;
     }
-    public void addFriendToMeeting(String friendID){
-        meetingFriendsID.add(friendID);
-    }
-    public void removeFriendFromMeeting(String friendRemoved){
-        for(String friendAttending : meetingFriendsID){
-            if(friendAttending.equalsIgnoreCase(friendRemoved)){
-                meetingFriendsID.remove(friendAttending);
+    public void addFriendToMeeting(Friend friend){
+        //Check existing if not found add
+        boolean found = false;
+        for (Friend f : meetingAttendees){
+            if(friend.getID().equalsIgnoreCase(f.getID())){
+                found = true;
+                break;
             }
-            break;
+        }
+        if(!found){
+            meetingAttendees.add(friend);
+        }
+    }
+    public void removeFriendFromMeeting(Friend friend){
+        for(Friend f: meetingAttendees){
+            if(friend.getID().equalsIgnoreCase(f.getID())){
+                meetingAttendees.remove(f);
+                break;
+            }
         }
     }
 
@@ -75,11 +85,11 @@ public class Meeting {
         this.location = location;
     }
 
-    public ArrayList<String> getMeetingFriendsID() {
-        return meetingFriendsID;
+    public ArrayList<Friend> getMeetingAttendees() {
+        return meetingAttendees;
     }
 
-    public void setMeetingFriendsID(ArrayList<String> meetingFriendsID) {
-        this.meetingFriendsID = meetingFriendsID;
+    public void setMeetingAttendees(ArrayList<Friend> meetingAttendees) {
+        this.meetingAttendees = meetingAttendees;
     }
 }

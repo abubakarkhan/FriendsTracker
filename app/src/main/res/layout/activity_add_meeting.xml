@@ -75,6 +75,19 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintHorizontal_bias="0.0" />
 
+        <TextView
+            android:id="@+id/addMeetingFriendsLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/attendees"
+            android:textStyle="bold"
+            android:layout_marginLeft="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/guideline1"
+            android:layout_marginRight="8dp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tv_attendees"
+            app:layout_constraintHorizontal_bias="0.0" />
+
         <android.support.constraint.Guideline
             android:id="@+id/guideline1"
             android:layout_width="wrap_content"
@@ -150,7 +163,7 @@
             android:inputType="textPersonName"
             android:layout_marginRight="16dp"
             app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/addMeetingStartTime"
             android:layout_marginLeft="8dp"
             app:layout_constraintLeft_toLeftOf="@+id/guideline1" />
@@ -162,18 +175,45 @@
             android:text="@string/cancel"
             app:layout_constraintBaseline_toBaselineOf="@+id/btn_saveAddMeeting"
             app:layout_constraintRight_toLeftOf="@+id/btn_saveAddMeeting"
-            android:layout_marginRight="16dp" />
+            android:layout_marginRight="8dp" />
 
         <Button
             android:id="@+id/btn_saveAddMeeting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/save"
-            android:layout_marginRight="16dp"
+            android:layout_marginRight="8dp"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="32dp"
-            app:layout_constraintTop_toBottomOf="@+id/addMeetingEndTime" />
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_attendees"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <Button
+            android:id="@+id/btn_addFriendsToMeeting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Manage Attendees"
+            app:layout_constraintBaseline_toBaselineOf="@+id/btn_cancelNewMeetingSave"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_attendees"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textSize="18sp"
+            app:layout_constraintWidth_default="wrap"
+            android:layout_marginTop="14dp"
+            android:padding="2dp"
+            app:layout_constraintTop_toBottomOf="@+id/addMeetingEndTime"
+            android:layout_marginLeft="0dp"
+            app:layout_constraintLeft_toLeftOf="@+id/addMeetingEndTime"
+            android:layout_marginRight="0dp"
+            app:layout_constraintRight_toRightOf="@+id/addMeetingEndTime"
+            app:layout_constraintHorizontal_bias="0.0" />
+
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

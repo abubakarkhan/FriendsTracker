@@ -15,4 +15,6 @@
     <string name="save">Save</string>
     <string name="sort_by_date_desc">Sort: Date (Descending)</string>
     <string name="sort_by_date_ascending">Sort: Date (Ascending)</string>
+    <string name="attendees">Attendees: </string>
+    <string name="no_friend_added_meeting">No Friends Added To Meeting</string>
 </resources>
