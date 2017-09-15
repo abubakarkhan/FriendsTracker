@@ -39,9 +39,9 @@ public class Meeting {
             meetingAttendees.add(friend);
         }
     }
-    public void removeFriendFromMeeting(Friend friend){
+    public void removeFriendFromMeeting(String friendID){
         for(Friend f: meetingAttendees){
-            if(friend.getID().equalsIgnoreCase(f.getID())){
+            if(f.getID().equalsIgnoreCase(friendID)){
                 meetingAttendees.remove(f);
                 break;
             }

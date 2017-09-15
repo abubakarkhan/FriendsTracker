@@ -22,6 +22,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.abubakar.friendstracker.Model.FriendData;
+import com.abubakar.friendstracker.Model.Meeting;
+import com.abubakar.friendstracker.Model.MeetingData;
 import com.abubakar.friendstracker.R;
 
 import java.text.DateFormat;
@@ -105,10 +107,15 @@ public class MainActivity extends AppCompatActivity {
                 mBuilder.setNegativeButton("Delete", new DialogInterface.OnClickListener(){
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        String friendRemovedID = FriendData.getInstance().getFriendArrayList().get(positionToRemove).getID();
                         FriendData.getInstance().getFriendArrayList().remove(positionToRemove);
                         adapter.notifyDataSetChanged();
                         Toast.makeText(getApplicationContext(),"Friend Deleted", Toast.LENGTH_SHORT).show();
                         dialogInterface.dismiss();
+                        //Remove also from associated meetings
+                        for (Meeting meeting: MeetingData.getInstance().getMeetingArrayList()){
+                            meeting.removeFriendFromMeeting(friendRemovedID);
+                        }
                     }
                 });
                 mBuilder.setNeutralButton("Dismiss", new DialogInterface.OnClickListener(){

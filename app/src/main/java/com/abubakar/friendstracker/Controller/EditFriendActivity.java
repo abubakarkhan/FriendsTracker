@@ -39,7 +39,7 @@ public class EditFriendActivity extends AppCompatActivity {
         editEmail = (EditText) findViewById(R.id.editFrientEmail);
         editDateOfBirth = (EditText) findViewById(R.id.editFriendBirthday);
         //Fill up fields with current information
-        DateFormat dateFormat = new SimpleDateFormat("MMM-dd-yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("MMM, dd, yyyy");
         final Friend friend   = FriendData.getInstance().getFriendByID(id);
         editName.setText(friend.getName());
         editEmail.setText(friend.getEmail());
