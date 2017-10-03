@@ -1,4 +1,4 @@
-package com.abubakar.friendstracker.Controller;
+package com.abubakar.friendstracker.View;
 
 import android.Manifest;
 import android.content.ContentResolver;
@@ -21,13 +21,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.abubakar.friendstracker.Controller.ManageFriend;
 import com.abubakar.friendstracker.Model.FriendData;
-import com.abubakar.friendstracker.Model.Meeting;
-import com.abubakar.friendstracker.Model.MeetingData;
 import com.abubakar.friendstracker.R;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -80,42 +76,23 @@ public class MainActivity extends AppCompatActivity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //Build Dialog
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
                 mBuilder.setTitle("Manage Friend");
                 final int positionToRemove = i;
-                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                //Null Email and Birthday Message
-                if (FriendData.getInstance().getFriendArrayList().get(i).getBirthday() == null){
-                    mBuilder.setMessage(FriendData.getInstance().getFriendArrayList().get(i).getName() + "\n"
-                                + FriendData.getInstance().getFriendArrayList().get(i).getEmail() + "\n"
-                                + "DOB N/A");
-                }else {
-                    mBuilder.setMessage(FriendData.getInstance().getFriendArrayList().get(i).getName() + "\n"
-                            + FriendData.getInstance().getFriendArrayList().get(i).getEmail() + "\n"
-                            + dateFormat.format(FriendData.getInstance().getFriendArrayList().get(i).getBirthday()));
-
-                }
+                //Set dialog message
+                ManageFriend.getInstance().populateDialog(positionToRemove,mBuilder);
+                //Dialog button listeners
                 mBuilder.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent intent = new Intent(getApplicationContext(), EditFriendActivity.class);
-                        intent.putExtra("id", FriendData.getInstance().getFriendArrayList().get(positionToRemove).getID());
-                        startActivity(intent);
-                        dialogInterface.dismiss();
+                        ManageFriend.getInstance().editFriend(getApplicationContext(),positionToRemove,MainActivity.this,dialogInterface);
                     }
                 });
                 mBuilder.setNegativeButton("Delete", new DialogInterface.OnClickListener(){
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        String friendRemovedID = FriendData.getInstance().getFriendArrayList().get(positionToRemove).getID();
-                        FriendData.getInstance().getFriendArrayList().remove(positionToRemove);
-                        adapter.notifyDataSetChanged();
-                        Toast.makeText(getApplicationContext(),"Friend Deleted", Toast.LENGTH_SHORT).show();
-                        dialogInterface.dismiss();
-                        //Remove also from associated meetings
-                        for (Meeting meeting: MeetingData.getInstance().getMeetingArrayList()){
-                            meeting.removeFriendFromMeeting(friendRemovedID);
-                        }
+                        ManageFriend.getInstance().deleteFriend(positionToRemove,adapter,getApplicationContext(),dialogInterface);
                     }
                 });
                 mBuilder.setNeutralButton("Dismiss", new DialogInterface.OnClickListener(){

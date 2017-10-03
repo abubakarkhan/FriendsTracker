@@ -1,4 +1,4 @@
-package com.abubakar.friendstracker.Controller;
+package com.abubakar.friendstracker.View;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;

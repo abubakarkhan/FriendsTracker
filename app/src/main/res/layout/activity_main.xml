@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/backgroundColor"
     android:orientation="vertical"
-    tools:context="com.abubakar.friendstracker.Controller.MainActivity">
+    tools:context="com.abubakar.friendstracker.View.MainActivity">
 
 
     <Button

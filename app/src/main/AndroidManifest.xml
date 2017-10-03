@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Controller.MainActivity"
+            android:name=".View.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,11 +18,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Controller.AddFriendActivity" />
-        <activity android:name=".Controller.EditFriendActivity" />
-        <activity android:name=".Controller.MeetingActivity" />
-        <activity android:name=".Controller.AddMeeting" />
-        <activity android:name=".Controller.EditMeetingActivity"></activity>
+        <activity android:name=".View.AddFriendActivity" />
+        <activity android:name=".View.EditFriendActivity" />
+        <activity android:name=".View.MeetingActivity" />
+        <activity android:name=".View.AddMeeting" />
+        <activity android:name=".View.EditMeetingActivity"></activity>
     </application>
 
 </manifest>

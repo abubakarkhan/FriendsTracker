@@ -1,4 +1,4 @@
-package com.abubakar.friendstracker.Controller;
+package com.abubakar.friendstracker.View;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
