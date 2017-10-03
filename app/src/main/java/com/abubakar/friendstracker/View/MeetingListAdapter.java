@@ -63,11 +63,12 @@ public class MeetingListAdapter extends BaseAdapter {
         startTime.setText(timeFormat.format(meetingArrayList.get(i).getStartTime()));
         endTime.setText(timeFormat.format(meetingArrayList.get(i).getEndTime()));
         for (Friend friend: meetingArrayList.get(i).getMeetingAttendees()){
-            friendsAttending += "- " + friend.getName() + "\n";
+            friendsAttending += "- " + friend.getName()+ "\n";
         }
         if (friendsAttending.trim().equals("")){
             attendeesList.setText(R.string.no_friend_added_meeting);
         }else {
+            friendsAttending = friendsAttending.trim();
             attendeesList.setText(friendsAttending);
         }
         v.setTag(meetingArrayList.get(i).getMeetingID());

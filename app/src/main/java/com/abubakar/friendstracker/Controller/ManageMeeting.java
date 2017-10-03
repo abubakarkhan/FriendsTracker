@@ -60,6 +60,7 @@ public class ManageMeeting {
         if (friendsAdded.trim().equalsIgnoreCase("")){
             attendees.setText(R.string.no_friend_added_meeting);
         }else{
+            friendsAdded = friendsAdded.trim();
             attendees.setText(friendsAdded);
         }
     }
