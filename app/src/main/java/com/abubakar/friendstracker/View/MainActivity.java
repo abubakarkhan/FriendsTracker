@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 mBuilder.setTitle("Manage Friend");
                 final int positionToRemove = i;
                 //Set dialog message
-                ManageFriend.getInstance().populateDialog(positionToRemove,mBuilder);
+                ManageFriend.getInstance().populateFriendDialog(positionToRemove,mBuilder);
                 //Dialog button listeners
                 mBuilder.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
                     @Override

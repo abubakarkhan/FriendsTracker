@@ -11,18 +11,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.abubakar.friendstracker.Controller.ManageMeeting;
 import com.abubakar.friendstracker.Model.Friend;
 import com.abubakar.friendstracker.Model.FriendData;
-import com.abubakar.friendstracker.Model.Meeting;
-import com.abubakar.friendstracker.Model.MeetingData;
 import com.abubakar.friendstracker.R;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class AddMeeting extends AppCompatActivity {
 
@@ -66,24 +61,7 @@ public class AddMeeting extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                //Create attendees list for text view
-                int counter = 1;
-                String friendsAdded = "";
-                for (Friend friend: FriendData.getInstance().getFriendArrayList()){
-                    for (Friend f: attendeesList){
-                        if (friend.getID().equalsIgnoreCase(f.getID()) && counter != attendeesList.size()){
-                            friendsAdded += "- " + friend.getName() + "\n";
-                            counter++;
-                        }else if(friend.getID().equalsIgnoreCase(f.getID()) && counter == attendeesList.size()) {
-                            friendsAdded += "- " + friend.getName();
-                        }
-                    }
-                }
-                if (friendsAdded.trim().equalsIgnoreCase("")){
-                    attendees.setText(R.string.no_friend_added_meeting);
-                }else{
-                    attendees.setText(friendsAdded);
-                }
+                ManageMeeting.getInstance().displayAttendees(attendeesList,attendees);
             }
         });
         final AlertDialog alertDialog = builder.create();
@@ -109,34 +87,10 @@ public class AddMeeting extends AppCompatActivity {
                 String date = meetingDate.getText().toString().trim();
                 String startTime = meetingStartTime.getText().toString().trim();
                 String endTime = meetingEndTime.getText().toString().trim();
-
-                if (!title.isEmpty() && !location.isEmpty() && !date.isEmpty()
-                        && !startTime.isEmpty() && !endTime.isEmpty()) {
-                    //Parse start date and time
-                    SimpleDateFormat dateAndTimeFormat = new SimpleDateFormat("MMM,dd,yyyy HH:mm");
-                    Date startDateAndTime = null;
-                    Date endDateAndTime = null;
-                    try {
-                        startDateAndTime = dateAndTimeFormat.parse(meetingDate.getText().toString() + " "
-                                + meetingStartTime.getText().toString());
-                        endDateAndTime = dateAndTimeFormat.parse(meetingDate.getText().toString() + " "
-                                + meetingEndTime.getText().toString());
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    if (endDateAndTime.before(startDateAndTime) || endDateAndTime.equals(startDateAndTime)) {
-                        Toast.makeText(getApplicationContext(), "Please make sure meeting times are correct", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Meeting meeting = new Meeting(title,startDateAndTime,endDateAndTime,location);
-                        meeting.setMeetingAttendees(attendeesList);
-                        MeetingData.getInstance().addNewMeeting(meeting);
-                        Toast.makeText(getApplicationContext(), "New Meeting Added", Toast.LENGTH_SHORT).show();
-                        finish();
-                    }
-
-                } else {
-                    Toast.makeText(getApplicationContext(), "Please fill in all of the fields", Toast.LENGTH_SHORT).show();
-                }
+                boolean valid = ManageMeeting.getInstance().saveNewMeeting(title,location,date,startTime,
+                        endTime,meetingDate,meetingStartTime,meetingEndTime,getApplicationContext(),attendeesList);
+                //Save and Go Back
+                if (valid){finish();}
             }
         });
         //Time field listeners

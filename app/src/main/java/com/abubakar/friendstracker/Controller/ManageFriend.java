@@ -27,7 +27,7 @@ public class ManageFriend {
     public static ManageFriend getInstance() {
         return ourInstance;
     }
-    public void populateDialog(final int positionToRemove,AlertDialog.Builder mBuilder){
+    public void populateFriendDialog(final int positionToRemove, AlertDialog.Builder mBuilder){
         int i = positionToRemove;
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         //Null Email and Birthday Message

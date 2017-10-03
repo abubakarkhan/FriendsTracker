@@ -15,11 +15,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.abubakar.friendstracker.Controller.ManageMeeting;
 import com.abubakar.friendstracker.Model.MeetingData;
 import com.abubakar.friendstracker.R;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 public class MeetingActivity extends AppCompatActivity {
 
@@ -72,20 +70,11 @@ public class MeetingActivity extends AppCompatActivity {
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(MeetingActivity.this);
                 mBuilder.setTitle("Manage Meetings");
                 final int positionToRemove = i;
-                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                DateFormat timeFormat = new SimpleDateFormat("HH:mm");
-                mBuilder.setMessage(MeetingData.getInstance().getMeetingArrayList().get(i).getTitle() +"\n"
-                        + "Location: "+MeetingData.getInstance().getMeetingArrayList().get(i).getLocation() + "\n"
-                        + "Date: "+ dateFormat.format(MeetingData.getInstance().getMeetingArrayList().get(i).getStartTime())
-                        +"\n" +"Start Time: "+ timeFormat.format(MeetingData.getInstance().getMeetingArrayList().get(i).getStartTime())
-                        +"\n" + "End Time: "+ timeFormat.format(MeetingData.getInstance().getMeetingArrayList().get(i).getEndTime()));
+                ManageMeeting.getInstance().populateMeetingDialog(positionToRemove,mBuilder);
                 mBuilder.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent intent = new Intent(getApplicationContext(), EditMeetingActivity.class);
-                        intent.putExtra("id", MeetingData.getInstance().getMeetingArrayList().get(positionToRemove).getMeetingID());
-                        startActivity(intent);
-                        dialogInterface.dismiss();
+                        ManageMeeting.getInstance().editMeeting(getApplicationContext(),positionToRemove,MeetingActivity.this,dialogInterface);
                     }
                 });
                 mBuilder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
@@ -110,7 +99,6 @@ public class MeetingActivity extends AppCompatActivity {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.meeting_page, menu);
         return true;
