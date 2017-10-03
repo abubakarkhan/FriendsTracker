@@ -7,14 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.abubakar.friendstracker.Model.FriendData;
+import com.abubakar.friendstracker.Controller.ManageFriend;
 import com.abubakar.friendstracker.R;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class AddFriendActivity extends AppCompatActivity {
 
@@ -45,50 +40,33 @@ public class AddFriendActivity extends AppCompatActivity {
                 String nameText = name.getText().toString().trim();
                 String emailText = email.getText().toString().trim();
                 String dobText = dateOfBirth.getText().toString().trim();
-                if(!nameText.isEmpty() && !emailText.isEmpty() && !dobText.isEmpty()){
-                    // Parse Date
-                    SimpleDateFormat format = new SimpleDateFormat("MMM, dd, yyyy");
-                    Date dob = null;
-                    try{
-                        dob = format.parse(dateOfBirth.getText().toString());
-                    }catch (ParseException e){
-                        e.printStackTrace();
-                    }
-                    FriendData.getInstance().addNewFriend(name.getText().toString(),email.getText().toString(),dob);
-                    Toast.makeText(getApplicationContext(), "Friend Added", Toast.LENGTH_SHORT).show();
-                    //Save and go back to main
-                    finish();
-                }else {
-                    Toast.makeText(getApplicationContext(), "Please fill in all of the fields", Toast.LENGTH_LONG).show();
-                }
+                boolean validData = ManageFriend.getInstance().saveNewFriend(nameText,emailText,dobText,dateOfBirth,getApplicationContext());
+                //Save and go back to main
+                if (validData){finish();}
             }
         });
         //Date edit text
         dateOfBirth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DialogFragment newFragment = new DateDialog();
-                Bundle bundle = new Bundle();
-                String callType = "addFriend";
-                bundle.putString("callType",callType);
-                newFragment.setArguments(bundle);
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                newFragment.show(fragmentManager,"datePicker");
+                buildDateDialog("addFriend");
             }
         });
         dateOfBirth.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if(b){
-                    DialogFragment newFragment = new DateDialog();
-                    Bundle bundle = new Bundle();
-                    String callType = "addFriend";
-                    bundle.putString("callType",callType);
-                    newFragment.setArguments(bundle);
-                    FragmentManager fragmentManager = getSupportFragmentManager();
-                    newFragment.show(fragmentManager,"datePicker");
+                    buildDateDialog("addFriend");
                 }
             }
         });
+    }
+    public void buildDateDialog(String callType){
+        DialogFragment newFragment = new DateDialog();
+        Bundle bundle = new Bundle();
+        bundle.putString("callType",callType);
+        newFragment.setArguments(bundle);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        newFragment.show(fragmentManager,"datePicker");
     }
 }

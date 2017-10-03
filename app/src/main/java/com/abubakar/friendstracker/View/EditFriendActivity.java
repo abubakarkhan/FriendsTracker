@@ -7,16 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
+import com.abubakar.friendstracker.Controller.ManageFriend;
 import com.abubakar.friendstracker.Model.Friend;
 import com.abubakar.friendstracker.Model.FriendData;
 import com.abubakar.friendstracker.R;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class EditFriendActivity extends AppCompatActivity {
 
@@ -29,7 +27,7 @@ public class EditFriendActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_friend);
         //Get friend id to load
-        Bundle bundle = getIntent().getExtras();
+        final Bundle bundle = getIntent().getExtras();
         final String id = bundle.getString("id");
 
         //Attach UI
@@ -56,31 +54,9 @@ public class EditFriendActivity extends AppCompatActivity {
                 String nameText = editName.getText().toString().trim();
                 String emailText = editEmail.getText().toString().trim();
                 String dobText = editDateOfBirth.getText().toString().trim();
-
-                if(!nameText.isEmpty() && !emailText.isEmpty() && !dobText.isEmpty()){
-                    // Parse Date
-                    SimpleDateFormat format = new SimpleDateFormat("MMM, dd, yyyy");
-                    Date dob = friend.getBirthday();
-                    try{
-                        dob = format.parse(editDateOfBirth.getText().toString());
-                    }catch (ParseException e){
-                        e.printStackTrace();
-                    }
-                    //Get index of editable item and save changes
-                    int positionIndex = FriendData.getInstance().getFriendListIndex(id);
-                    FriendData.getInstance().getFriendArrayList().get(positionIndex).setName(editName.getText().toString());
-                    FriendData.getInstance().getFriendArrayList().get(positionIndex).setEmail(editEmail.getText().toString());
-                    if(dob == null){
-                        FriendData.getInstance().getFriendArrayList().get(positionIndex).setBirthday(friend.getBirthday());
-                    }else {
-                        FriendData.getInstance().getFriendArrayList().get(positionIndex).setBirthday(dob);
-                    }
-                    //Save and go back to main
-                    Toast.makeText(getApplicationContext(), "Changes Saved", Toast.LENGTH_SHORT).show();
-                    finish();
-                }else {
-                    Toast.makeText(getApplicationContext(), "Please fill in all of the fields", Toast.LENGTH_SHORT).show();
-                }
+                boolean validChanges = ManageFriend.getInstance().saveEditFriendChanges(nameText,
+                        emailText,dobText,friend,editDateOfBirth,id,getApplicationContext());
+                if (validChanges){finish();}
             }
         });
         cancelEdit.setOnClickListener(new View.OnClickListener() {
@@ -93,28 +69,24 @@ public class EditFriendActivity extends AppCompatActivity {
         editDateOfBirth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DialogFragment newFragment = new DateDialog();
-                Bundle bundle = new Bundle();
-                String callType = "editFriend";
-                bundle.putString("callType",callType);
-                newFragment.setArguments(bundle);
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                newFragment.show(fragmentManager,"datePicker");
+                buildDateDialog("editFriend");
             }
         });
         editDateOfBirth.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if(b){
-                    DialogFragment newFragment = new DateDialog();
-                    Bundle bundle = new Bundle();
-                    String callType = "editFriend";
-                    bundle.putString("callType",callType);
-                    newFragment.setArguments(bundle);
-                    FragmentManager fragmentManager = getSupportFragmentManager();
-                    newFragment.show(fragmentManager,"datePicker");
+                    buildDateDialog("editFriend");
                 }
             }
         });
+    }
+    public void buildDateDialog(String callType){
+        DialogFragment newFragment = new DateDialog();
+        Bundle bundle = new Bundle();
+        bundle.putString("callType",callType);
+        newFragment.setArguments(bundle);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        newFragment.show(fragmentManager,"datePicker");
     }
 }
