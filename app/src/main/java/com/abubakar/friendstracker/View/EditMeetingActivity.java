@@ -13,7 +13,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.abubakar.friendstracker.Controller.ManageMeeting;
-import com.abubakar.friendstracker.Model.Friend;
 import com.abubakar.friendstracker.Model.FriendData;
 import com.abubakar.friendstracker.Model.Meeting;
 import com.abubakar.friendstracker.Model.MeetingData;
@@ -21,7 +20,6 @@ import com.abubakar.friendstracker.R;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 
 public class EditMeetingActivity extends AppCompatActivity {
 
@@ -40,8 +38,6 @@ public class EditMeetingActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         final String meetingID = bundle.getString("id");
         final Meeting meeting = MeetingData.getInstance().getMeetingByID(meetingID);
-        //Store IDS
-        final ArrayList<Friend> attendeesList = new ArrayList<>();
         //List View for dialog
         final ListView listView = new ListView(this);
         AddToMeetingListAdapter adapter = new AddToMeetingListAdapter(getApplicationContext(),
