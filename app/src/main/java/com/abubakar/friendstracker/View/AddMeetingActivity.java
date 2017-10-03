@@ -19,7 +19,7 @@ import com.abubakar.friendstracker.R;
 
 import java.util.ArrayList;
 
-public class AddMeeting extends AppCompatActivity {
+public class AddMeetingActivity extends AppCompatActivity {
 
     private EditText meetingTitle;
     private EditText meetingLocation;
@@ -51,7 +51,7 @@ public class AddMeeting extends AppCompatActivity {
         //
         attendees.setText(R.string.no_friend_added_meeting);
         // Dialog : setup the alert builder
-        final AlertDialog.Builder builder = new AlertDialog.Builder(AddMeeting.this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(AddMeetingActivity.this);
         builder.setIcon(R.drawable.friend);
         builder.setTitle("Add friends to meeting");
         // add a checkbox list
@@ -87,7 +87,7 @@ public class AddMeeting extends AppCompatActivity {
                 String date = meetingDate.getText().toString().trim();
                 String startTime = meetingStartTime.getText().toString().trim();
                 String endTime = meetingEndTime.getText().toString().trim();
-                boolean valid = ManageMeeting.getInstance().saveNewMeeting(title,location,date,startTime,
+                boolean valid = ManageMeeting.getInstance().saveMeeting(title,location,date,startTime,
                         endTime,meetingDate,meetingStartTime,meetingEndTime,getApplicationContext(),attendeesList);
                 //Save and Go Back
                 if (valid){finish();}

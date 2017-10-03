@@ -17,4 +17,5 @@
     <string name="sort_by_date_ascending">Sort: Date (Ascending)</string>
     <string name="attendees">Attendees: </string>
     <string name="no_friend_added_meeting">No Friends Added To Meeting</string>
+    <string name="managet_attendees">Manage Attendees</string>
 </resources>

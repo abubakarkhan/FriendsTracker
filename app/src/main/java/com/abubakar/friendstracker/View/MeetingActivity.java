@@ -60,7 +60,7 @@ public class MeetingActivity extends AppCompatActivity {
         addNewMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), AddMeeting.class);
+                Intent intent = new Intent(getApplicationContext(), AddMeetingActivity.class);
                 startActivity(intent);
             }
         });

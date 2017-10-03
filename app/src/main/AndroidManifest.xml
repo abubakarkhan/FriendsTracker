@@ -21,7 +21,7 @@
         <activity android:name=".View.AddFriendActivity" />
         <activity android:name=".View.EditFriendActivity" />
         <activity android:name=".View.MeetingActivity" />
-        <activity android:name=".View.AddMeeting" />
+        <activity android:name=".View.AddMeetingActivity" />
         <activity android:name=".View.EditMeetingActivity"></activity>
     </application>
 

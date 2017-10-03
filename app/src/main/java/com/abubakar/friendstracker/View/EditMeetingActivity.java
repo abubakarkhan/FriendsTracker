@@ -1,22 +1,27 @@
 package com.abubakar.friendstracker.View;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.ListView;
+import android.widget.TextView;
 
+import com.abubakar.friendstracker.Controller.ManageMeeting;
+import com.abubakar.friendstracker.Model.Friend;
+import com.abubakar.friendstracker.Model.FriendData;
 import com.abubakar.friendstracker.Model.Meeting;
 import com.abubakar.friendstracker.Model.MeetingData;
 import com.abubakar.friendstracker.R;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
 
 public class EditMeetingActivity extends AppCompatActivity {
 
@@ -25,6 +30,7 @@ public class EditMeetingActivity extends AppCompatActivity {
     private EditText editDate;
     private EditText editStartTime;
     private EditText editEndTime;
+    private TextView attendees;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,25 +39,56 @@ public class EditMeetingActivity extends AppCompatActivity {
         //Get meeting id to load
         Bundle bundle = getIntent().getExtras();
         final String meetingID = bundle.getString("id");
-
+        final Meeting meeting = MeetingData.getInstance().getMeetingByID(meetingID);
+        //Store IDS
+        final ArrayList<Friend> attendeesList = new ArrayList<>();
+        //List View for dialog
+        final ListView listView = new ListView(this);
+        AddToMeetingListAdapter adapter = new AddToMeetingListAdapter(getApplicationContext(),
+                FriendData.getInstance().getFriendArrayList(),meeting.getMeetingAttendees());
+        listView.setAdapter(adapter);
         //Attach UI
         Button saveEdit = (Button) findViewById(R.id.btn_saveAddMeeting);
         Button cancelEdit = (Button) findViewById(R.id.btn_cancelEditMeetingSave);
+        Button manageAttendees = (Button) findViewById(R.id.btn_addFriendsToMeeting_edit);
         editTitle = (EditText) findViewById(R.id.editMeetingTitleED);
         editLocation = (EditText) findViewById(R.id.editMeetingLocation);
         editDate = (EditText) findViewById(R.id.editMeetingDate);
         editStartTime = (EditText) findViewById(R.id.editMeetingStartTime);
         editEndTime = (EditText) findViewById(R.id.editMeetingEndTime);
+        attendees = (TextView) findViewById(R.id.tv_attendeesEdit);
         //Fill up fields with current information
         DateFormat dateFormat = new SimpleDateFormat("MMM,dd,yyyy");
         DateFormat timeFormat = new SimpleDateFormat("HH:mm");
-        final Meeting meeting = MeetingData.getInstance().getMeetingByID(meetingID);
         editTitle.setText(meeting.getTitle());
         editLocation.setText(meeting.getLocation());
         editDate.setText(dateFormat.format(meeting.getStartTime()));
         editStartTime.setText(timeFormat.format(meeting.getStartTime()));
         editEndTime.setText(timeFormat.format(meeting.getEndTime()));
+        ManageMeeting.getInstance().displayAttendees(meeting.getMeetingAttendees(),attendees);
+        // Dialog : setup the alert builder
+        final AlertDialog.Builder builder = new AlertDialog.Builder(EditMeetingActivity.this);
+        builder.setIcon(R.drawable.friend);
+        builder.setTitle("Add friends to meeting");
+        // add a checkbox list
+        builder.setView(listView);
+        // Done
+        builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                ManageMeeting.getInstance().displayAttendees(meeting.getMeetingAttendees(),attendees);
+            }
+        });
+        final AlertDialog alertDialog = builder.create();
         //Button Listeners
+        manageAttendees.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.show();
+
+            }
+        });
         cancelEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,34 +103,10 @@ public class EditMeetingActivity extends AppCompatActivity {
                 String date = editDate.getText().toString().trim();
                 String startTime = editStartTime.getText().toString().trim();
                 String endTime = editEndTime.getText().toString().trim();
-
-                if(!title.isEmpty() && !location.isEmpty() && !date.isEmpty() && !startTime.isEmpty()
-                        && !endTime.isEmpty()){
-                    //Parse start date and time
-                    SimpleDateFormat dateAndTimeFormat = new SimpleDateFormat("MMM,dd,yyyy HH:mm");
-                    Date startDateAndTime = meeting.getStartTime();
-                    Date endDateAndTime = meeting.getEndTime();
-                    try{
-                        startDateAndTime = dateAndTimeFormat.parse(editDate.getText().toString()+" "+ editStartTime.getText().toString());
-                        endDateAndTime = dateAndTimeFormat.parse(editDate.getText().toString()+" "+editEndTime.getText().toString());
-                    }catch (ParseException e){
-                        e.printStackTrace();
-                    }
-                    //Get index of editable item and save changes
-                    int positionIndex = MeetingData.getInstance().getMeetingListIndex(meetingID);
-                    MeetingData.getInstance().getMeetingArrayList().get(positionIndex).setTitle(editTitle.getText().toString());
-                    MeetingData.getInstance().getMeetingArrayList().get(positionIndex).setLocation(editLocation.getText().toString());
-                    if(endDateAndTime.before(startDateAndTime) || endDateAndTime.equals(startDateAndTime)){
-                        Toast.makeText(getApplicationContext(), "Please make sure meeting times are correct", Toast.LENGTH_SHORT).show();
-                    }else {
-                        MeetingData.getInstance().getMeetingArrayList().get(positionIndex).setStartTime(startDateAndTime);
-                        MeetingData.getInstance().getMeetingArrayList().get(positionIndex).setEndTime(endDateAndTime);
-                        Toast.makeText(getApplicationContext(), "Changes Saved", Toast.LENGTH_SHORT).show();
-                        finish();
-                    }
-                }else {
-                    Toast.makeText(getApplicationContext(), "Please fill in all of the fields", Toast.LENGTH_SHORT).show();
-                }
+                boolean valid = ManageMeeting.getInstance().saveMeetingChanges(title,location,date,startTime,endTime,
+                        meeting,editDate,editStartTime,editEndTime,meetingID,getApplicationContext(),meeting.getMeetingAttendees());
+                //Save Changes
+                if (valid){finish();}
             }
         });
         //Date edit text

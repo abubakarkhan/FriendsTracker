@@ -63,7 +63,7 @@ public class ManageMeeting {
             attendees.setText(friendsAdded);
         }
     }
-    public boolean saveNewMeeting(String title, String location, String date, String startTime, String endTime,
+    public boolean saveMeeting(String title, String location, String date, String startTime, String endTime,
                                EditText meetingDate, EditText meetingStartTime, EditText meetingEndTime, Context context,
                                ArrayList<Friend> attendeesList){
         if (!title.isEmpty() && !location.isEmpty() && !date.isEmpty()
@@ -90,8 +90,41 @@ public class ManageMeeting {
                 Toast.makeText(context, "New Meeting Added", Toast.LENGTH_SHORT).show();
                 return true;
             }
-
         } else {
+            Toast.makeText(context, "Please fill in all of the fields", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
+    public boolean saveMeetingChanges(String title, String location, String date, String startTime,String endTime,
+                                      Meeting meeting, EditText editDate, EditText editStartTime,EditText editEndTime,
+                                      String meetingID, Context context,ArrayList<Friend> attendeesList){
+        if(!title.isEmpty() && !location.isEmpty() && !date.isEmpty() && !startTime.isEmpty()
+                && !endTime.isEmpty()){
+            //Parse start date and time
+            SimpleDateFormat dateAndTimeFormat = new SimpleDateFormat("MMM,dd,yyyy HH:mm");
+            Date startDateAndTime = meeting.getStartTime();
+            Date endDateAndTime = meeting.getEndTime();
+            try{
+                startDateAndTime = dateAndTimeFormat.parse(editDate.getText().toString()+" "+ editStartTime.getText().toString());
+                endDateAndTime = dateAndTimeFormat.parse(editDate.getText().toString()+" "+editEndTime.getText().toString());
+            }catch (ParseException e){
+                e.printStackTrace();
+            }
+            //Get index of editable item and save changes
+            int positionIndex = MeetingData.getInstance().getMeetingListIndex(meetingID);
+            MeetingData.getInstance().getMeetingArrayList().get(positionIndex).setTitle(title);
+            MeetingData.getInstance().getMeetingArrayList().get(positionIndex).setLocation(location);
+            if(endDateAndTime.before(startDateAndTime) || endDateAndTime.equals(startDateAndTime)){
+                Toast.makeText(context, "Please make sure meeting times are correct", Toast.LENGTH_SHORT).show();
+                return false;
+            }else {
+                MeetingData.getInstance().getMeetingArrayList().get(positionIndex).setStartTime(startDateAndTime);
+                MeetingData.getInstance().getMeetingArrayList().get(positionIndex).setEndTime(endDateAndTime);
+                MeetingData.getInstance().getMeetingArrayList().get(positionIndex).setMeetingAttendees(attendeesList);
+                Toast.makeText(context, "Changes Saved", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        }else {
             Toast.makeText(context, "Please fill in all of the fields", Toast.LENGTH_SHORT).show();
             return false;
         }
