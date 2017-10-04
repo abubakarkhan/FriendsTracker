@@ -23,7 +23,12 @@ public class Friend {
     }
 
     public Friend(String name, String email) {
-        this.ID = "";
+        counter += 1;
+        if (name.length() == 1){
+            this.ID = Character.toString(name.charAt(0)) + counter;
+        }else {
+            this.ID = Character.toString(name.charAt(0)) + Character.toString(name.charAt(1)) + counter;
+        }
         this.name = name;
         this.email = email;
     }

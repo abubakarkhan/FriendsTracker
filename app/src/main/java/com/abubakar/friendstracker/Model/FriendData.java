@@ -20,10 +20,12 @@ public class FriendData {
         return friendArrayList;
     }
     public void addNewFriend(String name, String email, Date date ){
-        friendArrayList.add(new Friend(name, email, date));
+        Friend friend = new Friend(name,email,date);
+        friendArrayList.add(friend);
     }
     public void addNewFriend(String name, String email){
-        friendArrayList.add(new Friend(name, email));
+        Friend friend = new Friend(name,email);
+        friendArrayList.add(friend);
     }
 
     public void addSampleFriends(){

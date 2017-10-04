@@ -16,65 +16,70 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
+            android:layout_marginRight="8dp"
             android:text="@string/meeting_title"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/editMeetingTitleED"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/guideline1"
-            android:layout_marginRight="16dp"
-            app:layout_constraintHorizontal_bias="0.0" />
+            app:layout_constraintRight_toLeftOf="@+id/guideline1" />
 
         <TextView
             android:id="@+id/editMeetingLocationLabel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
+            android:layout_marginRight="8dp"
             android:text="@string/location"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/editMeetingLocation"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/guideline1"
-            android:layout_marginRight="16dp"
-            app:layout_constraintHorizontal_bias="0.0" />
+            app:layout_constraintRight_toLeftOf="@+id/guideline1" />
 
         <TextView
             android:id="@+id/editMeetingDateLabel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
+            android:layout_marginRight="8dp"
             android:text="@string/meeting_date"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/editMeetingDate"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/guideline1"
-            android:layout_marginRight="16dp"
-            app:layout_constraintHorizontal_bias="0.0" />
+            app:layout_constraintRight_toLeftOf="@+id/guideline1" />
 
         <TextView
             android:id="@+id/editMeetingStartTimeTV"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
+            android:layout_marginRight="8dp"
             android:text="@string/meeting_start_time"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/editMeetingStartTime"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/guideline1"
-            android:layout_marginRight="16dp"
-            app:layout_constraintHorizontal_bias="0.0" />
+            app:layout_constraintRight_toLeftOf="@+id/guideline1" />
 
         <TextView
             android:id="@+id/editMeetingEndTimeLabel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
+            android:layout_marginRight="8dp"
             android:text="@string/meeting_end_time"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/editMeetingEndTime"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/guideline1"
-            android:layout_marginRight="16dp"
-            app:layout_constraintHorizontal_bias="0.0" />
+            app:layout_constraintRight_toLeftOf="@+id/guideline1" />
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline1"
@@ -85,9 +90,9 @@
 
         <EditText
             android:id="@+id/editMeetingTitleED"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="0dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
             android:ems="10"
@@ -98,37 +103,39 @@
 
         <EditText
             android:id="@+id/editMeetingLocation"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="0dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
             android:ems="10"
             android:inputType="textPersonName"
             app:layout_constraintLeft_toLeftOf="@+id/guideline1"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editMeetingTitleED" />
+            app:layout_constraintTop_toBottomOf="@+id/editMeetingTitleED"
+            app:layout_constraintHorizontal_bias="0.0" />
 
         <EditText
             android:id="@+id/editMeetingDate"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="0dp"
             android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="7dp"
             android:ems="10"
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:inputType="textPersonName"
             app:layout_constraintLeft_toLeftOf="@+id/guideline1"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editMeetingLocation" />
+            app:layout_constraintTop_toBottomOf="@+id/editMeetingLocation"
+            app:layout_constraintHorizontal_bias="0.0" />
 
         <EditText
             android:id="@+id/editMeetingStartTime"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="0dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
             android:ems="10"
@@ -141,11 +148,11 @@
 
         <EditText
             android:id="@+id/editMeetingEndTime"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="0dp"
             android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="7dp"
             android:ems="10"
             android:focusable="false"
             android:focusableInTouchMode="false"
@@ -195,8 +202,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginRight="8dp"
             android:text="@string/attendees"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/tv_attendeesEdit"
             app:layout_constraintHorizontal_bias="0.0"

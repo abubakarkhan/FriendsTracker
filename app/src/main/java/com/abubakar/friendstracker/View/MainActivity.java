@@ -1,11 +1,9 @@
 package com.abubakar.friendstracker.View;
 
 import android.Manifest;
-import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
@@ -13,7 +11,6 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,12 +21,14 @@ import android.widget.Toast;
 import com.abubakar.friendstracker.Controller.ManageFriend;
 import com.abubakar.friendstracker.Model.FriendData;
 import com.abubakar.friendstracker.R;
+import com.abubakar.friendstracker.SupportCode.ContactDataManager;
 
 public class MainActivity extends AppCompatActivity {
 
     ListView list;
     private FriendListAdapter adapter;
     private BottomNavigationView navigation;
+    protected static final int PICK_CONTACTS = 100;
     private static final int READ_CONTACTS_PERMISSIONS_REQUEST = 1;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -105,55 +104,61 @@ public class MainActivity extends AppCompatActivity {
                 alertDialog.show();
             }
         });
-        //permission
+        //Permission
         getPermissionToReadUserContacts();
         //Import Phone Contacts
         importContactsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ContentResolver cr = getContentResolver();
-                Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,null, null, null, null);
-                if (cur.getCount() > 0) {
-                    while (cur.moveToNext()) {
-                        String id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
-                        Cursor cur1 = cr.query(
-                                ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
-                                ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = ?",
-                                new String[]{id}, null);
-                        while (cur1.moveToNext()) {
-                            //to get the contact names
-                            String name=cur1.getString(cur1.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
-                            Log.e("Name :", name);
-                            String email = cur1.getString(cur1.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
-                            Log.e("Email", email);
-                            if(email!=null){
-                                FriendData.getInstance().addNewFriend(name,email);
-                            }else {
-                                FriendData.getInstance().addNewFriend(name,"N/A");
-                            }
-                        }
-                        cur1.close();
-                    }
-                }
-                adapter.notifyDataSetChanged();
+                readContacts();
             }
         });
     }
+    private void readContacts(){
+        Intent contactPickerIntent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+        startActivityForResult(contactPickerIntent, PICK_CONTACTS);
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == PICK_CONTACTS){
+            if(resultCode == RESULT_OK){
+                ContactDataManager contactsManager = new ContactDataManager(this, data);
+                String name = "";
+                String email = "";
+                try {
+                    name = contactsManager.getContactName();
+                    email = contactsManager.getContactEmail();
+                    System.out.println(name + email);
+                    FriendData.getInstance().addNewFriend(name,email);
+                    Toast.makeText(getApplicationContext(),"Added Friend: " + name, Toast.LENGTH_LONG).show();
+                    adapter.notifyDataSetChanged();
+                }catch (ContactDataManager.ContactQueryException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
     public void getPermissionToReadUserContacts() {
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
                 != PackageManager.PERMISSION_GRANTED) {
 
+            // The permission is NOT already granted.
+            // Check if the user has been asked about this permission already and denied
+            // it. If so, we want to give more explanation about why the permission is needed.
             if (shouldShowRequestPermissionRationale(
                     Manifest.permission.READ_CONTACTS)) {
+                // Show our own UI to explain to the user why we need to read the contacts
+                // before actually requesting the permission and showing the default UI
             }
+
+            // Fire off an async request to actually get the permission
+            // This will show the standard permission request dialog UI
             requestPermissions(new String[]{Manifest.permission.READ_CONTACTS},
                     READ_CONTACTS_PERMISSIONS_REQUEST);
         }
     }
-
-    // Callback with the request from calling requestPermissions(...)
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String permissions[],
