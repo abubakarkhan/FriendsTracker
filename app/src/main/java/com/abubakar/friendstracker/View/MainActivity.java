@@ -1,14 +1,16 @@
 package com.abubakar.friendstracker.View;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.content.ContextCompat;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -105,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //Permission
-        getPermissionToReadUserContacts();
+        getPermissions();
         //Import Phone Contacts
         importContactsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,41 +141,24 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-    public void getPermissionToReadUserContacts() {
+    public void getPermissions() {
+        int Permission_All = 1;
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            // The permission is NOT already granted.
-            // Check if the user has been asked about this permission already and denied
-            // it. If so, we want to give more explanation about why the permission is needed.
-            if (shouldShowRequestPermissionRationale(
-                    Manifest.permission.READ_CONTACTS)) {
-                // Show our own UI to explain to the user why we need to read the contacts
-                // before actually requesting the permission and showing the default UI
-            }
-
-            // Fire off an async request to actually get the permission
-            // This will show the standard permission request dialog UI
-            requestPermissions(new String[]{Manifest.permission.READ_CONTACTS},
-                    READ_CONTACTS_PERMISSIONS_REQUEST);
+        String[] Permissions = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_CONTACTS};
+        if(!hasPermissions(this, Permissions)){
+            ActivityCompat.requestPermissions(this, Permissions, Permission_All);
         }
     }
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String permissions[],
-                                           @NonNull int[] grantResults) {
-        // Make sure it's our original READ_CONTACTS request
-        if (requestCode == READ_CONTACTS_PERMISSIONS_REQUEST) {
-            if (grantResults.length == 1 &&
-                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Read Contacts permission granted", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "Read Contacts permission denied", Toast.LENGTH_SHORT).show();
+    public static boolean hasPermissions(Context context, String... permissions){
+
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M && context!=null && permissions!=null){
+            for(String permission: permissions){
+                if(ActivityCompat.checkSelfPermission(context, permission)!= PackageManager.PERMISSION_GRANTED){
+                    return  false;
+                }
             }
-        } else {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+        return true;
     }
 
     @Override
