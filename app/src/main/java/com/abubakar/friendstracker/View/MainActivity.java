@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
                     PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
                     Calendar calendar = Calendar.getInstance();
                     calendar.set(Calendar.HOUR_OF_DAY, 14);
-                    calendar.set(Calendar.MINUTE, 3 + requestCode);
+                    calendar.set(Calendar.MINUTE, 10 + requestCode);
                     calendar.set(Calendar.SECOND, 3);
                     alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
 
