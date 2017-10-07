@@ -1,6 +1,8 @@
 package com.abubakar.friendstracker.View;
 
 import android.Manifest;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,6 +15,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,8 +25,12 @@ import android.widget.Toast;
 
 import com.abubakar.friendstracker.Controller.ManageFriend;
 import com.abubakar.friendstracker.Model.FriendData;
+import com.abubakar.friendstracker.Model.Meeting;
+import com.abubakar.friendstracker.Model.MeetingData;
 import com.abubakar.friendstracker.R;
 import com.abubakar.friendstracker.SupportCode.ContactDataManager;
+
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView navigation;
     protected static final int PICK_CONTACTS = 100;
     private static final int READ_CONTACTS_PERMISSIONS_REQUEST = 1;
+    private static final String TAG = "MainActivity";
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -54,8 +62,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Add FriendData
+        //Add Sample Data
         FriendData.getInstance().addSampleFriends();
+        MeetingData.getInstance().addSampleMeeting();
         //Link UI
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         Button addNewFriend = (Button)findViewById(R.id.addFreindBtn);
@@ -112,7 +121,26 @@ public class MainActivity extends AppCompatActivity {
         importContactsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                readContacts();
+                //readContacts();
+                Log.d(TAG, "onClick: button click");
+                AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                int requestCode = 1;
+                for (Meeting meeting : MeetingData.getInstance().getMeetingArrayList()) {
+                    Log.d(TAG, "onClick: in for loop" + requestCode);
+
+                    Intent intent = new Intent(getApplicationContext(), MeetingNotificationReceiver.class);
+                    intent.putExtra("requestCode", requestCode);
+                    intent.putExtra("meetingId", meeting.getMeetingID());
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.set(Calendar.HOUR_OF_DAY, 14);
+                    calendar.set(Calendar.MINUTE, 3 + requestCode);
+                    calendar.set(Calendar.SECOND, 3);
+                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+
+                    requestCode++;
+                }
+                Log.d(TAG, "onClick: button click exit");
             }
         });
     }

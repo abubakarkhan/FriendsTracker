@@ -29,6 +29,8 @@
             android:windowSoftInputMode="stateHidden"  />
         <activity android:name=".View.EditMeetingActivity"
             android:windowSoftInputMode="stateHidden"/>
+
+        <receiver android:name=".View.MeetingNotificationReceiver" />
     </application>
 
 </manifest>

@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.abubakar.friendstracker.Controller.ManageMeeting;
+import com.abubakar.friendstracker.Model.FriendData;
 import com.abubakar.friendstracker.Model.MeetingData;
 import com.abubakar.friendstracker.R;
 
@@ -45,7 +46,8 @@ public class MeetingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meeting);
-        //Add meeting data
+        //Add sample data
+        FriendData.getInstance().addSampleFriends();
         MeetingData.getInstance().addSampleMeeting();
         //Link UI
         Button addNewMeeting = (Button) findViewById(R.id.addNewMeetingBtn);
