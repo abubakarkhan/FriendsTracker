@@ -9,10 +9,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static android.content.ContentValues.TAG;
-
 public class FriendData {
 
+    private static final String TAG = "FriendData";
     private static final FriendData ourInstance = new FriendData();
     private ArrayList<Friend> friendArrayList = new ArrayList<>();
 
@@ -37,11 +36,13 @@ public class FriendData {
 
     public void populateFriendsList(DatabaseHelper db) {
         Cursor cursor = db.getAllFriendData();
+        friendArrayList.clear();
         if (cursor.getCount() == 0) {
             Log.d(TAG, "populatFriendsList: NO DATA IN DB");
             return;
         }
         while (cursor.moveToNext()) {
+            String id = cursor.getString(0);
             String name = cursor.getString(1);
             String email = cursor.getString(2);
             String dob = cursor.getString(3);
@@ -64,10 +65,8 @@ public class FriendData {
             }
             String timestamp = cursor.getString(6);
 
-            Friend friend = new Friend(name, email, dateOfBirth, lat, lon, timestamp);
+            Friend friend = new Friend(id, name, email, dateOfBirth, lat, lon, timestamp);
             friendArrayList.add(friend);
-
-
         }
     }
 

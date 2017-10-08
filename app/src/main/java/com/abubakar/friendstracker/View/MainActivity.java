@@ -24,13 +24,14 @@ import com.abubakar.friendstracker.Controller.ManageFriend;
 import com.abubakar.friendstracker.Model.DatabaseHelper;
 import com.abubakar.friendstracker.Model.Friend;
 import com.abubakar.friendstracker.Model.FriendData;
+import com.abubakar.friendstracker.Model.MeetingData;
 import com.abubakar.friendstracker.R;
 import com.abubakar.friendstracker.SupportCode.ContactDataManager;
 
 public class MainActivity extends AppCompatActivity {
 
-    DatabaseHelper myDB;
-    ListView list;
+    private DatabaseHelper myDB;
+    private ListView list;
     private FriendListAdapter adapter;
     private BottomNavigationView navigation;
     protected static final int PICK_CONTACTS = 100;
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         myDB = new DatabaseHelper(this);
         //Populate array list from DB
         FriendData.getInstance().populateFriendsList(myDB);
+        MeetingData.getInstance().populateMeetingList(myDB);
 
         //Link UI
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -209,5 +211,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         FriendData.getInstance().saveFriendDatabase(myDB);
+        MeetingData.getInstance().saveMeetingDatabase(myDB);
     }
 }

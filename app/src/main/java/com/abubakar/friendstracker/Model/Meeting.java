@@ -1,7 +1,11 @@
 package com.abubakar.friendstracker.Model;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Date;
+
+import static android.content.ContentValues.TAG;
 
 
 public class Meeting {
@@ -15,22 +19,18 @@ public class Meeting {
     private ArrayList<Friend> meetingAttendees = new ArrayList<>();
     private static int counter = 0;
 
-    public Meeting(String title, Date startTime, Date endTime) {
+    public Meeting(String meetingID, String title, Date startTime, Date endTime, Double lat, Double lon) {
+        this.meetingID = meetingID;
         this.title = title;
-        //Generate Unique String ID
-        counter +=1;
-        if (title.length() == 1){
-            this.meetingID = counter + Character.toString(title.charAt(0));
-        }else {
-            this.meetingID = Character.toString(title.charAt(0)) + counter + Character.toString(title.charAt(1));
-        }
         this.startTime = startTime;
         this.endTime = endTime;
+        this.lat = lat;
+        this.lon = lon;
     }
 
     public Meeting(String title, Date startTime, Date endTime, Double lat, Double lon) {
         this.title = title;
-        counter += 1;
+        counter = (int) (Math.random() * 9999);
         //Generate Unique String ID
         if (title.length() == 1) {
             this.meetingID = counter + Character.toString(title.charAt(0));
@@ -46,12 +46,17 @@ public class Meeting {
     public void addFriendToMeeting(Friend friend){
         //Check existing if not found add
         boolean found = false;
-        for (Friend f : meetingAttendees){
-            if(friend.getID().equalsIgnoreCase(f.getID())){
-                found = true;
-                break;
+        try {
+            for (Friend f : meetingAttendees) {
+                if (friend.getID().equalsIgnoreCase(f.getID())) {
+                    found = true;
+                    break;
+                }
             }
+        } catch (NullPointerException e) {
+            Log.d(TAG, "addFriendToMeeting: null exception");
         }
+
         if(!found){
             meetingAttendees.add(friend);
         }

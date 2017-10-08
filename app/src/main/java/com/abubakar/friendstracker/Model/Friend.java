@@ -13,8 +13,19 @@ public class Friend {
     private String timestamp;
     private static int counter = 0;
 
-    public Friend(String name, String email, Date birthday) {
-        counter += 1;
+    public Friend(String name, String email) {
+        counter = (int) (Math.random() * 9999);
+        if (name.length() == 1){
+            this.ID = Character.toString(name.charAt(0)) + counter;
+        }else {
+            this.ID = Character.toString(name.charAt(0)) + Character.toString(name.charAt(1)) + counter;
+        }
+        this.name = name;
+        this.email = email;
+    }
+
+    public Friend(String name, String email, Date birthday, Double lat, Double lon, String timestamp) {
+        counter = (int) (Math.random() * 9999);
         if (name.length() == 1){
             this.ID = Character.toString(name.charAt(0)) + counter;
         }else {
@@ -23,36 +34,13 @@ public class Friend {
         this.name = name;
         this.email = email;
         this.birthday = birthday;
+        this.lat = lat;
+        this.lon = lon;
+        this.timestamp = timestamp;
     }
 
-    public Friend(String name, String email) {
-        counter += 1;
-        if (name.length() == 1){
-            this.ID = Character.toString(name.charAt(0)) + counter;
-        }else {
-            this.ID = Character.toString(name.charAt(0)) + Character.toString(name.charAt(1)) + counter;
-        }
-        this.name = name;
-        this.email = email;
-    }
-
-    public Friend(String name) {
-        counter += 1;
-        if (name.length() == 1) {
-            this.ID = Character.toString(name.charAt(0)) + counter;
-        } else {
-            this.ID = Character.toString(name.charAt(0)) + Character.toString(name.charAt(1)) + counter;
-        }
-        this.name = name;
-    }
-
-    public Friend(String name, String email, Date birthday, Double lat, Double lon, String timestamp) {
-        counter += 1;
-        if (name.length() == 1) {
-            this.ID = Character.toString(name.charAt(0)) + counter;
-        } else {
-            this.ID = Character.toString(name.charAt(0)) + Character.toString(name.charAt(1)) + counter;
-        }
+    public Friend(String ID, String name, String email, Date birthday, Double lat, Double lon, String timestamp) {
+        this.ID = ID;
         this.name = name;
         this.email = email;
         this.birthday = birthday;

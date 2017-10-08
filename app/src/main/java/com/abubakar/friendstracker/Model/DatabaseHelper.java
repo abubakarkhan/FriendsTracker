@@ -95,6 +95,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.d(TAG, "onUpgrade: EXit");
     }
 
+    public boolean insertAttendeesData(String meetingID, String friendID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_ATTENDEES_MEETING_ID, meetingID);
+        values.put(COL_ATTENDEES_FRIEND_ID, friendID);
+
+        long result = db.insert(TABLE_NAME_ATTENDEES, null, values);
+        if (result == -1) {
+            Log.d(TAG, "insertAttendeesData: FAILED");
+            return false;
+        } else {
+            Log.d(TAG, "insertAttendeesData: SUCCESS");
+            return true;
+        }
+    }
+
+    public Cursor getAllAttendeesData() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME_ATTENDEES + ";", null);
+        return cursor;
+    }
+
+    public void clearAttendeesData() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME_ATTENDEES, null, null);
+        Log.d(TAG, "clearAttendeesData: CLEARED");
+    }
+
+
     public boolean insertMeetingData(String meetingID, String title, String startTime, String endTime, Double lat, Double lon) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -124,6 +153,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void clearMeetingTable() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME_MEETINGS, null, null);
+        Log.d(TAG, "clearMeetingTable: CLEARED");
     }
 
     public boolean insertFriendData(String friendID, String name, String dob,

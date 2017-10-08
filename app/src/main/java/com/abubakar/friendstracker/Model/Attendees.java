@@ -2,21 +2,26 @@ package com.abubakar.friendstracker.Model;
 
 public class Attendees {
 
-    private String ID;
+    private int ID;
     private String meetingID;
     private String friendID;
 
-    public Attendees(String ID, String meetingID, String friendID) {
+    public Attendees(int ID, String meetingID, String friendID) {
         this.ID = ID;
         this.meetingID = meetingID;
         this.friendID = friendID;
     }
 
-    public String getID() {
+    public Attendees(String meetingID, String friendID) {
+        this.meetingID = meetingID;
+        this.friendID = friendID;
+    }
+
+    public int getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 

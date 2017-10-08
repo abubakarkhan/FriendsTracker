@@ -25,7 +25,7 @@ public class MeetingNotificationReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         int requestCode = intent.getExtras().getInt("requestCode");
         String meetingId = intent.getExtras().getString("meetingId");
-        MeetingData.getInstance().addSampleMeeting();
+//        MeetingData.getInstance().addSampleMeeting(); NEEDS FIX
         Meeting meeting = MeetingData.getInstance().getMeetingByID(meetingId);
 
         Log.d(TAG, "onReceive: req code " + requestCode + meetingId);

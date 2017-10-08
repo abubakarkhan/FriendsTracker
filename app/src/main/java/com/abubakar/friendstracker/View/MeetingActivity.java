@@ -16,12 +16,13 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.abubakar.friendstracker.Controller.ManageMeeting;
+import com.abubakar.friendstracker.Model.DatabaseHelper;
 import com.abubakar.friendstracker.Model.MeetingData;
 import com.abubakar.friendstracker.R;
 
 public class MeetingActivity extends AppCompatActivity {
 
-    ListView list;
+    private DatabaseHelper myDB;
     private MeetingListAdapter adapter;
     private BottomNavigationView navigation;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -45,14 +46,16 @@ public class MeetingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meeting);
-        //Add sample data
-        MeetingData.getInstance().addSampleMeeting();
+
+        //Database
+        myDB = new DatabaseHelper(this);
+
         //Link UI
         Button addNewMeeting = (Button) findViewById(R.id.addNewMeetingBtn);
         navigation = (BottomNavigationView) findViewById(R.id.navigation_meetings);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.navigation_meetings);
-        list = (ListView) findViewById(R.id.meetingListView);
+        ListView list = (ListView) findViewById(R.id.meetingListView);
         adapter = new MeetingListAdapter(getApplicationContext(), MeetingData.getInstance().getMeetingArrayList());
         list.setAdapter(adapter);
 
@@ -124,5 +127,11 @@ public class MeetingActivity extends AppCompatActivity {
         super.onResume();
         navigation.setSelectedItemId(R.id.navigation_meetings);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MeetingData.getInstance().saveMeetingDatabase(myDB);
     }
 }
