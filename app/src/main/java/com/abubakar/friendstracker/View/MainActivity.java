@@ -133,25 +133,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 readContacts();
-//                Log.d(TAG, "onClick: button click");
-//                AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-//                int requestCode = 1;
-//                for (Meeting meeting : MeetingData.getInstance().getMeetingArrayList()) {
-//                    Log.d(TAG, "onClick: in for loop" + requestCode);
-//
-//                    Intent intent = new Intent(getApplicationContext(), MeetingNotificationReceiver.class);
-//                    intent.putExtra("requestCode", requestCode);
-//                    intent.putExtra("meetingId", meeting.getMeetingID());
-//                    PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//                    Calendar calendar = Calendar.getInstance();
-//                    calendar.set(Calendar.HOUR_OF_DAY, 14);
-//                    calendar.set(Calendar.MINUTE, 10 + requestCode);
-//                    calendar.set(Calendar.SECOND, 3);
-//                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-//
-//                    requestCode++;
-//                }
-//                Log.d(TAG, "onClick: button click exit");
             }
         });
     }

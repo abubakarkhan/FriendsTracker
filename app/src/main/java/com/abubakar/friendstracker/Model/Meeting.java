@@ -122,4 +122,16 @@ public class Meeting {
     public void setLon(Double lon) {
         this.lon = lon;
     }
+
+    @Override
+    public String toString() {
+        return "Meeting{" +
+                "meetingID='" + meetingID + '\'' +
+                ", title='" + title + '\'' +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", lat=" + lat +
+                ", lon=" + lon +
+                '}';
+    }
 }

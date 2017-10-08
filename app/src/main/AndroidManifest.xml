@@ -30,7 +30,22 @@
         <activity android:name=".View.EditMeetingActivity"
             android:windowSoftInputMode="stateHidden"/>
 
-        <receiver android:name=".View.MeetingNotificationReceiver" />
+        <receiver android:name=".Controller.MeetingNotificationReceiver" />
+        <receiver android:name=".Controller.dismissActionReceiver">
+            <intent-filter>
+                <action android:name="dismiss_click" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".Controller.cancelActionReceiver">
+            <intent-filter>
+                <action android:name="cancel_click" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".Controller.snoozeActionReceiver">
+            <intent-filter>
+                <action android:name="snooze_click" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

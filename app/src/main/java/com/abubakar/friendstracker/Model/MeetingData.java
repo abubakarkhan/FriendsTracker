@@ -4,9 +4,6 @@ package com.abubakar.friendstracker.Model;
 import android.database.Cursor;
 import android.util.Log;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -66,30 +63,16 @@ public class MeetingData {
         while (cursor.moveToNext()) {
             String id = cursor.getString(0);
             String title = cursor.getString(1);
-            String startTime = cursor.getString(2);
-            String endTime = cursor.getString(3);
-            Date meetingStart;
-            Date meetingEnd;
-            if (startTime != null && !startTime.isEmpty() && endTime != null && !endTime.isEmpty()) {
-                try {
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy, mm, dd HH:mm");
-                    meetingStart = format.parse(startTime);
-                    meetingEnd = format.parse(endTime);
-                } catch (ParseException e) {
-                    Log.d(TAG, "populateMeetingList: PARSE ERROR");
-                    e.printStackTrace();
-                    meetingStart = null;
-                    meetingEnd = null;
-                }
-                Double lat = null;
-                Double lon = null;
-                if (cursor.getString(4) != null && cursor.getString(5) != null) {
-                    lat = Double.valueOf(cursor.getString(4));
-                    lon = Double.valueOf(cursor.getString(5));
-                }
-                Meeting meeting = new Meeting(id, title, meetingStart, meetingEnd, lat, lon);
-                meetingArrayList.add(meeting);
-            }
+            Long startTime = cursor.getLong(2);
+            Long endTime = cursor.getLong(3);
+            Date meetingStart = new Date();
+            Date meetingEnd = new Date();
+            meetingStart.setTime(startTime);
+            meetingEnd.setTime(endTime);
+            Double lat = Double.valueOf(cursor.getString(4));
+            Double lon = Double.valueOf(cursor.getString(5));
+            Meeting meeting = new Meeting(id, title, meetingStart, meetingEnd, lat, lon);
+            meetingArrayList.add(meeting);
         }
         ArrayList<Attendees> attendeesArrayList = loadAttendeesData(db);
         addAttendeesToMeeting(attendeesArrayList);
@@ -141,16 +124,9 @@ public class MeetingData {
         saveAttendeesData(db);
         db.clearMeetingTable();
         for (Meeting m : meetingArrayList) {
-            DateFormat format = new SimpleDateFormat("yyyy, mm, dd HH:mm");
             Date startTime = m.getStartTime();
             Date endTime = m.getEndTime();
-            String startString = null;
-            String endString = null;
-            if (startTime != null && endTime != null) {
-                startString = format.format(startTime);
-                endString = format.format(endTime);
-            }
-            db.insertMeetingData(m.getMeetingID(), m.getTitle(), startString, endString, m.getLat(), m.getLon());
+            db.insertMeetingData(m.getMeetingID(), m.getTitle(), startTime.getTime(), endTime.getTime(), m.getLat(), m.getLon());
         }
     }
 

@@ -20,4 +20,7 @@
     <string name="managet_attendees">Manage Attendees</string>
     <string name="latitude">Latitude: </string>
     <string name="longitude">Longitude: </string>
+    <string name="dismiss">DIMISS</string>
+    <string name="cancel_caps">CANCEL</string>
+    <string name="snooze">SNOOZE</string>
 </resources>

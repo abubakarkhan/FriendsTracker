@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.Date;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String TAG = "DatabaseHelper";
@@ -67,8 +69,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sSQL = "CREATE TABLE " + TABLE_NAME_MEETINGS + " (" +
                 COL_MEETING_ID + " TEXT PRIMARY KEY NOT NULL, " +
                 COL_MEETING_TITLE + " TEXT NOT NULL, " +
-                COL_MEETING_START_TIME + " TEXT, " +
-                COL_MEETING_END_TIME + " TEXT," +
+                COL_MEETING_START_TIME + " INTEGER, " +
+                COL_MEETING_END_TIME + " INTEGER," +
                 COL_MEETING_LATITUDE + " REAL, " +
                 COL_MEETING_LONGITUDE + " REAL)";
         Log.d(TAG, sSQL);
@@ -124,7 +126,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public boolean insertMeetingData(String meetingID, String title, String startTime, String endTime, Double lat, Double lon) {
+    public boolean insertMeetingData(String meetingID, String title, Long startTime, Long endTime, Double lat, Double lon) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COL_MEETING_ID, meetingID);
@@ -154,6 +156,44 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME_MEETINGS, null, null);
         Log.d(TAG, "clearMeetingTable: CLEARED");
+    }
+
+    public Meeting getMeeting(String meetingID) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + TABLE_NAME_MEETINGS + " WHERE " + COL_MEETING_ID + " = '" + meetingID + "';";
+        Log.d(TAG, selectQuery);
+        Cursor c = db.rawQuery(selectQuery, null);
+        if (c.moveToFirst()) {
+            c.moveToFirst();
+        } else {
+            Log.d(TAG, "getMeeting: NULL CURSOR");
+            return null;
+        }
+        String id = c.getString(0);
+        String title = c.getString(1);
+        Long startTime = c.getLong(2);
+        Long endTime = c.getLong(3);
+        Double lat = Double.valueOf(c.getString(4));
+        Double lon = Double.valueOf(c.getString(5));
+        //Close Cursor
+        c.close();
+        Date meetingStart = new Date(startTime);
+        Date meetingEnd = new Date(endTime);
+
+        Meeting meeting = new Meeting(id, title, meetingStart, meetingEnd, lat, lon);
+        Log.d(TAG, "getMeeting: " + meeting.toString());
+        return meeting;
+    }
+
+    public void deleteMeetingRow(String meetingID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Integer integer = db.delete(TABLE_NAME_MEETINGS, "MeetingID = ?", new String[]{meetingID});
+        if (integer <= 0) {
+            Log.d(TAG, "deleteMeetingRow: Meeting Record Not deleted");
+        } else {
+            Log.d(TAG, "deleteMeetingRow: Meeting Record deleted");
+        }
+
     }
 
     public boolean insertFriendData(String friendID, String name, String dob,

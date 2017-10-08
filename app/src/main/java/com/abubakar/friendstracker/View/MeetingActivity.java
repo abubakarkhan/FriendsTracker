@@ -1,5 +1,7 @@
 package com.abubakar.friendstracker.View;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,11 +19,18 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.abubakar.friendstracker.Controller.ManageMeeting;
+import com.abubakar.friendstracker.Controller.MeetingNotificationReceiver;
 import com.abubakar.friendstracker.Model.DatabaseHelper;
+import com.abubakar.friendstracker.Model.Meeting;
 import com.abubakar.friendstracker.Model.MeetingData;
 import com.abubakar.friendstracker.R;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class MeetingActivity extends AppCompatActivity {
+
+    private static final String TAG = "MeetingActivity";
 
     private DatabaseHelper myDB;
     private MeetingListAdapter adapter;
@@ -100,13 +110,45 @@ public class MeetingActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void generateMeetingNotifications() {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        int requestCode = 1;
+        for (Meeting meeting : MeetingData.getInstance().getMeetingArrayList()) {
+            Intent intent = new Intent(getApplicationContext(), MeetingNotificationReceiver.class);
+            intent.putExtra("requestCode", requestCode);
+            intent.putExtra("meetingId", meeting.getMeetingID());
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            Date startTime = meeting.getStartTime();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(startTime);
+            calendar.add(Calendar.MINUTE, -9);
+            calendar.set(Calendar.SECOND, 1);
+            Log.d(TAG, "generateMeetingNotifications: ===============" + calendar.getTime().toString());
+            long ONE_MINUTE_IN_MILLIS = 60000;
+            if (System.currentTimeMillis() > startTime.getTime() - (ONE_MINUTE_IN_MILLIS * 9)) {
+                Date date = new Date();
+                date.setTime(System.currentTimeMillis());
+                Log.d(TAG, "generateMeetingNotifications: " + date.toString() + "         " + System.currentTimeMillis());
+                Log.d(TAG, "generateMeetingNotifications: " + startTime.toString() + "       " + startTime.getTime());
+                continue;
+            }
+            Date date = new Date();
+            date.setTime(System.currentTimeMillis());
+            Log.d(TAG, "generateMeetingNotifications: " + date.toString() + "         " + System.currentTimeMillis());
+            Log.d(TAG, "generateMeetingNotifications: " + startTime.toString() + "       " + startTime.getTime());
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+            Log.d(TAG, "generateMeetingNotifications: " + requestCode);
+            requestCode++;
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.meeting_page, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
@@ -121,7 +163,6 @@ public class MeetingActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -133,5 +174,6 @@ public class MeetingActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         MeetingData.getInstance().saveMeetingDatabase(myDB);
+        generateMeetingNotifications();
     }
 }
