@@ -68,7 +68,8 @@ public class ManageFriend {
             }catch (ParseException e){
                 e.printStackTrace();
             }
-            FriendData.getInstance().addNewFriend(nameText,emailText,dob);
+            Friend friend = new Friend(nameText, emailText, dob, null, null, null);
+            FriendData.getInstance().addNewFriend(friend);
             Toast.makeText(context, "Friend Added", Toast.LENGTH_SHORT).show();
             return true;
         }else {

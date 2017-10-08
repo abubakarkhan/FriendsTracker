@@ -10,12 +10,14 @@ public class Meeting {
     private String title;
     private Date startTime;
     private Date endTime;
-    private String location;
+    private Double lat;
+    private Double lon;
     private ArrayList<Friend> meetingAttendees = new ArrayList<>();
     private static int counter = 0;
 
-    public Meeting(String title, Date startTime, Date endTime, String location) {
+    public Meeting(String title, Date startTime, Date endTime) {
         this.title = title;
+        //Generate Unique String ID
         counter +=1;
         if (title.length() == 1){
             this.meetingID = counter + Character.toString(title.charAt(0));
@@ -24,8 +26,23 @@ public class Meeting {
         }
         this.startTime = startTime;
         this.endTime = endTime;
-        this.location = location;
     }
+
+    public Meeting(String title, Date startTime, Date endTime, Double lat, Double lon) {
+        this.title = title;
+        counter += 1;
+        //Generate Unique String ID
+        if (title.length() == 1) {
+            this.meetingID = counter + Character.toString(title.charAt(0));
+        } else {
+            this.meetingID = Character.toString(title.charAt(0)) + counter + Character.toString(title.charAt(1));
+        }
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.lat = lat;
+        this.lon = lon;
+    }
+
     public void addFriendToMeeting(Friend friend){
         //Check existing if not found add
         boolean found = false;
@@ -77,19 +94,27 @@ public class Meeting {
         this.endTime = endTime;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
     public ArrayList<Friend> getMeetingAttendees() {
         return meetingAttendees;
     }
 
     public void setMeetingAttendees(ArrayList<Friend> meetingAttendees) {
         this.meetingAttendees = meetingAttendees;
+    }
+
+    public Double getLat() {
+        return lat;
+    }
+
+    public Double getLon() {
+        return lon;
+    }
+
+    public void setLat(Double lat) {
+        this.lat = lat;
+    }
+
+    public void setLon(Double lon) {
+        this.lon = lon;
     }
 }

@@ -22,7 +22,8 @@ import java.util.ArrayList;
 public class AddMeetingActivity extends AppCompatActivity {
 
     private EditText meetingTitle;
-    private EditText meetingLocation;
+    private EditText meetingLat;
+    private EditText meetingLon;
     private EditText meetingDate;
     private EditText meetingStartTime;
     private EditText meetingEndTime;
@@ -40,7 +41,8 @@ public class AddMeetingActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
         //Attach UI
         meetingTitle = (EditText) findViewById(R.id.addMeetingTitleED);
-        meetingLocation = (EditText) findViewById(R.id.addMeetingLocation);
+        meetingLat = (EditText) findViewById(R.id.addMeetingLat);
+        meetingLon = (EditText) findViewById(R.id.addMeetingLon);
         meetingDate = (EditText) findViewById(R.id.addMeetingDate);
         meetingStartTime = (EditText) findViewById(R.id.addMeetingStartTime);
         meetingEndTime = (EditText) findViewById(R.id.addMeetingEndTime);
@@ -83,11 +85,21 @@ public class AddMeetingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String title = meetingTitle.getText().toString().trim();
-                String location = meetingLocation.getText().toString().trim();
+                String latString = meetingLat.getText().toString().trim();
+                String lonString = meetingLon.getText().toString().trim();
+                Double lat;
+                Double lon;
+                if (latString.isEmpty() || lonString.isEmpty()) {
+                    lat = null;
+                    lon = null;
+                } else {
+                    lat = Double.valueOf(latString);
+                    lon = Double.valueOf(lonString);
+                }
                 String date = meetingDate.getText().toString().trim();
                 String startTime = meetingStartTime.getText().toString().trim();
                 String endTime = meetingEndTime.getText().toString().trim();
-                boolean valid = ManageMeeting.getInstance().saveMeeting(title,location,date,startTime,
+                boolean valid = ManageMeeting.getInstance().saveMeeting(title, lat, lon, date, startTime,
                         endTime,meetingDate,meetingStartTime,meetingEndTime,getApplicationContext(),attendeesList);
                 //Save and Go Back
                 if (valid){finish();}

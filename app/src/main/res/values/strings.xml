@@ -18,4 +18,6 @@
     <string name="attendees">Attendees: </string>
     <string name="no_friend_added_meeting">No Friends Added To Meeting</string>
     <string name="managet_attendees">Manage Attendees</string>
+    <string name="latitude">Latitude: </string>
+    <string name="longitude">Longitude: </string>
 </resources>

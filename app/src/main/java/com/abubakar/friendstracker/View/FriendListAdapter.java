@@ -47,7 +47,12 @@ public class FriendListAdapter extends BaseAdapter {
 
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         name.setText(friendArrayList.get(i).getName());
-        email.setText(friendArrayList.get(i).getEmail());
+
+        if (friendArrayList.get(i).getEmail() == null) {
+            email.setText("N/A");
+        } else {
+            email.setText(friendArrayList.get(i).getEmail());
+        }
         if (friendArrayList.get(i).getBirthday() == null){
             birthday.setText("N/A");
         }else {

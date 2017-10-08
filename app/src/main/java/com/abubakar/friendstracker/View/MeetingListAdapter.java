@@ -58,10 +58,20 @@ public class MeetingListAdapter extends BaseAdapter {
         String friendsAttending = "";
 
         meetingTitle.setText(meetingArrayList.get(i).getTitle());
-        meetingLocation.setText(meetingArrayList.get(i).getLocation());
+
+        Double lat = meetingArrayList.get(i).getLat();
+        Double lon = meetingArrayList.get(i).getLon();
+        String location = null;
+        if (lat != null && lon != null) {
+            location = lat + "," + lon;
+            meetingLocation.setText(location);
+        } else {
+            meetingLocation.setText("Location Not Chosen");
+        }
         meetingDate.setText(dateFormat.format(meetingArrayList.get(i).getStartTime()));
         startTime.setText(timeFormat.format(meetingArrayList.get(i).getStartTime()));
         endTime.setText(timeFormat.format(meetingArrayList.get(i).getEndTime()));
+
         for (Friend friend: meetingArrayList.get(i).getMeetingAttendees()){
             friendsAttending += "- " + friend.getName()+ "\n";
         }

@@ -24,7 +24,8 @@ import java.text.SimpleDateFormat;
 public class EditMeetingActivity extends AppCompatActivity {
 
     private EditText editTitle;
-    private EditText editLocation;
+    private EditText editLat;
+    private EditText editLon;
     private EditText editDate;
     private EditText editStartTime;
     private EditText editEndTime;
@@ -48,7 +49,8 @@ public class EditMeetingActivity extends AppCompatActivity {
         Button cancelEdit = (Button) findViewById(R.id.btn_cancelEditMeetingSave);
         Button manageAttendees = (Button) findViewById(R.id.btn_addFriendsToMeeting_edit);
         editTitle = (EditText) findViewById(R.id.editMeetingTitleED);
-        editLocation = (EditText) findViewById(R.id.editMeetingLocation);
+        editLat = (EditText) findViewById(R.id.editMeetingLat);
+        editLon = (EditText) findViewById(R.id.editMeetingLon);
         editDate = (EditText) findViewById(R.id.editMeetingDate);
         editStartTime = (EditText) findViewById(R.id.editMeetingStartTime);
         editEndTime = (EditText) findViewById(R.id.editMeetingEndTime);
@@ -57,7 +59,8 @@ public class EditMeetingActivity extends AppCompatActivity {
         DateFormat dateFormat = new SimpleDateFormat("MMM,dd,yyyy");
         DateFormat timeFormat = new SimpleDateFormat("HH:mm");
         editTitle.setText(meeting.getTitle());
-        editLocation.setText(meeting.getLocation());
+        editLat.setText(meeting.getLat().toString());
+        editLon.setText(meeting.getLon().toString());
         editDate.setText(dateFormat.format(meeting.getStartTime()));
         editStartTime.setText(timeFormat.format(meeting.getStartTime()));
         editEndTime.setText(timeFormat.format(meeting.getEndTime()));
@@ -95,11 +98,21 @@ public class EditMeetingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String title = editTitle.getText().toString().trim();
-                String location = editLocation.getText().toString().trim();
+                String latString = editLat.getText().toString().trim();
+                String lonString = editLon.getText().toString().trim();
+                Double lat;
+                Double lon;
+                if (latString.isEmpty() || lonString.isEmpty()) {
+                    lat = null;
+                    lon = null;
+                } else {
+                    lat = Double.valueOf(latString);
+                    lon = Double.valueOf(lonString);
+                }
                 String date = editDate.getText().toString().trim();
                 String startTime = editStartTime.getText().toString().trim();
                 String endTime = editEndTime.getText().toString().trim();
-                boolean valid = ManageMeeting.getInstance().saveMeetingChanges(title,location,date,startTime,endTime,
+                boolean valid = ManageMeeting.getInstance().saveMeetingChanges(title, lat, lon, date, startTime, endTime,
                         meeting,editDate,editStartTime,editEndTime,meetingID,getApplicationContext(),meeting.getMeetingAttendees());
                 //Save Changes
                 if (valid){finish();}

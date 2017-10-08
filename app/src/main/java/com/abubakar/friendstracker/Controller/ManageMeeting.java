@@ -31,8 +31,18 @@ public class ManageMeeting {
     public void populateMeetingDialog(int i, AlertDialog.Builder mBuilder){
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         DateFormat timeFormat = new SimpleDateFormat("HH:mm");
-        mBuilder.setMessage(MeetingData.getInstance().getMeetingArrayList().get(i).getTitle() +"\n"
-                + "Location: "+MeetingData.getInstance().getMeetingArrayList().get(i).getLocation() + "\n"
+
+        String title = MeetingData.getInstance().getMeetingArrayList().get(i).getTitle();
+        Double lat = MeetingData.getInstance().getMeetingArrayList().get(i).getLat();
+        Double lon = MeetingData.getInstance().getMeetingArrayList().get(i).getLon();
+        String location = null;
+        if (lat != null && lon != null) {
+            location = "Location: " + lat + "," + lon;
+        } else {
+            location = "Location not chosen";
+        }
+        mBuilder.setMessage(title + "\n"
+                + location + "\n"
                 + "Date: "+ dateFormat.format(MeetingData.getInstance().getMeetingArrayList().get(i).getStartTime())
                 +"\n" +"Start Time: "+ timeFormat.format(MeetingData.getInstance().getMeetingArrayList().get(i).getStartTime())
                 +"\n" + "End Time: "+ timeFormat.format(MeetingData.getInstance().getMeetingArrayList().get(i).getEndTime()));
@@ -64,10 +74,11 @@ public class ManageMeeting {
             attendees.setText(friendsAdded);
         }
     }
-    public boolean saveMeeting(String title, String location, String date, String startTime, String endTime,
+
+    public boolean saveMeeting(String title, Double lon, Double lat, String date, String startTime, String endTime,
                                EditText meetingDate, EditText meetingStartTime, EditText meetingEndTime, Context context,
                                ArrayList<Friend> attendeesList){
-        if (!title.isEmpty() && !location.isEmpty() && !date.isEmpty()
+        if (!title.isEmpty() && lon != null && lat != null && !date.isEmpty()
                 && !startTime.isEmpty() && !endTime.isEmpty()) {
             //Parse start date and time
             SimpleDateFormat dateAndTimeFormat = new SimpleDateFormat("MMM,dd,yyyy HH:mm");
@@ -85,7 +96,7 @@ public class ManageMeeting {
                 Toast.makeText(context, "Please make sure meeting times are correct", Toast.LENGTH_SHORT).show();
                 return false;
             } else {
-                Meeting meeting = new Meeting(title,startDateAndTime,endDateAndTime,location);
+                Meeting meeting = new Meeting(title, startDateAndTime, endDateAndTime, lat, lon);
                 meeting.setMeetingAttendees(attendeesList);
                 MeetingData.getInstance().addNewMeeting(meeting);
                 Toast.makeText(context, "New Meeting Added", Toast.LENGTH_SHORT).show();
@@ -96,10 +107,11 @@ public class ManageMeeting {
             return false;
         }
     }
-    public boolean saveMeetingChanges(String title, String location, String date, String startTime,String endTime,
-                                      Meeting meeting, EditText editDate, EditText editStartTime,EditText editEndTime,
-                                      String meetingID, Context context,ArrayList<Friend> attendeesList){
-        if(!title.isEmpty() && !location.isEmpty() && !date.isEmpty() && !startTime.isEmpty()
+
+    public boolean saveMeetingChanges(String title, Double lat, Double lon, String date, String startTime, String endTime,
+                                      Meeting meeting, EditText editDate, EditText editStartTime, EditText editEndTime,
+                                      String meetingID, Context context, ArrayList<Friend> attendeesList){
+        if (!title.isEmpty() && lon != null && lat != null && !date.isEmpty() && !startTime.isEmpty()
                 && !endTime.isEmpty()){
             //Parse start date and time
             SimpleDateFormat dateAndTimeFormat = new SimpleDateFormat("MMM,dd,yyyy HH:mm");
@@ -114,7 +126,9 @@ public class ManageMeeting {
             //Get index of editable item and save changes
             int positionIndex = MeetingData.getInstance().getMeetingListIndex(meetingID);
             MeetingData.getInstance().getMeetingArrayList().get(positionIndex).setTitle(title);
-            MeetingData.getInstance().getMeetingArrayList().get(positionIndex).setLocation(location);
+            MeetingData.getInstance().getMeetingArrayList().get(positionIndex).setLat(lat);
+            MeetingData.getInstance().getMeetingArrayList().get(positionIndex).setLon(lon);
+
             if(endDateAndTime.before(startDateAndTime) || endDateAndTime.equals(startDateAndTime)){
                 Toast.makeText(context, "Please make sure meeting times are correct", Toast.LENGTH_SHORT).show();
                 return false;

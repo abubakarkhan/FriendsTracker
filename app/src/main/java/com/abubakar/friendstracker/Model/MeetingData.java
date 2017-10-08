@@ -20,7 +20,7 @@ public class MeetingData {
         return meetingArrayList;
     }
     public ArrayList<Meeting> sortMeetingsByDateDesc(){
-        Meeting temp = null;
+        Meeting temp;
         for(int i=0; i < meetingArrayList.size(); i++){
             for(int j=0; j < meetingArrayList.size()-i-1;j++){
                 if (meetingArrayList.get(j).getStartTime().before(meetingArrayList.get(j+1).getStartTime())){
@@ -33,7 +33,7 @@ public class MeetingData {
         return meetingArrayList;
     }
     public ArrayList<Meeting> sortMeetingsByDateAscending(){
-        Meeting temp = null;
+        Meeting temp;
         for(int i=0; i < meetingArrayList.size(); i++){
             for(int j=0; j < meetingArrayList.size()-i-1;j++){
                 if (meetingArrayList.get(j).getStartTime().after(meetingArrayList.get(j+1).getStartTime())){
@@ -51,8 +51,8 @@ public class MeetingData {
 
     public void addSampleMeeting(){
         if(!dataAdded){
-            meetingArrayList.add(new Meeting("Chai Meetup",new Date(2017-1900,9,1,10,30),new Date(2017-1900,9,1,11,30),"Lat-34.12, Lon-144.12"));
-            meetingArrayList.add(new Meeting("Coffee Meetup",new Date(2017-1900,9,2,10,30),new Date(2017-1900,9,1,11,30),"Lat-34.12, Lon-144.12"));
+            meetingArrayList.add(new Meeting("Chai Meet up", new Date(2017 - 1900, 9, 1, 10, 30), new Date(2017 - 1900, 9, 1, 11, 30), 34.12, -144.12));
+            meetingArrayList.add(new Meeting("Coffee Meet up", new Date(2017 - 1900, 9, 2, 10, 30), new Date(2017 - 1900, 9, 1, 11, 30), -34.12, -144.12));
             dataAdded = true;
         }
     }
