@@ -50,8 +50,14 @@ public class EditFriendActivity extends AppCompatActivity {
         }else {
             editDateOfBirth.setText(dateFormat.format(friend.getBirthday()));
         }
-        editLat.setText(friend.getLat().toString());
-        editLon.setText(friend.getLon().toString());
+        try {
+            editLat.setText(friend.getLat().toString());
+            editLon.setText(friend.getLon().toString());
+        } catch (Exception e) {
+            editLat.setText("");
+            editLon.setText("");
+        }
+
         //Button listener
         saveChanges.setOnClickListener(new View.OnClickListener() {
             @Override
