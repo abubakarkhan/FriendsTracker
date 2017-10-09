@@ -44,8 +44,15 @@ public class AddFriendActivity extends AppCompatActivity {
                 String nameText = name.getText().toString().trim();
                 String emailText = email.getText().toString().trim();
                 String dobText = dateOfBirth.getText().toString().trim();
-                Double lat = Double.valueOf(friendLat.getText().toString().trim());
-                Double lon = Double.valueOf(friendLon.getText().toString().trim());
+                Double lat;
+                Double lon;
+                try {
+                    lat = Double.valueOf(friendLat.getText().toString().trim());
+                    lon = Double.valueOf(friendLon.getText().toString().trim());
+                } catch (Exception e) {
+                    lat = null;
+                    lon = null;
+                }
                 boolean validData = ManageFriend.getInstance().saveNewFriend(nameText, emailText, dobText, dateOfBirth, lat, lon, getApplicationContext());
                 //Save and go back to main
                 if (validData){finish();}

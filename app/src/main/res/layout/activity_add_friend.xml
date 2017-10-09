@@ -141,10 +141,10 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
-        tools:layout_editor_absoluteY="226dp"
         app:layout_constraintRight_toLeftOf="@+id/guideline"
         android:layout_marginRight="8dp"
-        app:layout_constraintHorizontal_bias="0.0" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintBaseline_toBaselineOf="@+id/add_frn_lon" />
 
     <EditText
         android:id="@+id/add_frn_lat"
@@ -169,7 +169,6 @@
         android:layout_marginTop="6dp"
         android:ems="10"
         android:inputType="number|numberSigned|numberDecimal"
-        android:text="Name"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="@+id/guideline"
         app:layout_constraintRight_toRightOf="parent"

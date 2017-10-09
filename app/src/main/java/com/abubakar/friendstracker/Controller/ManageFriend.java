@@ -60,8 +60,8 @@ public class ManageFriend {
     }
 
     public boolean saveNewFriend(String nameText, String emailText, String dobText, EditText dateOfBirth, Double lat, Double lon, Context context) {
-        if (!nameText.isEmpty() && !emailText.isEmpty() && !dobText.isEmpty() && !lat.toString().isEmpty()
-                && !lon.toString().isEmpty()) {
+        if (!nameText.isEmpty() && !emailText.isEmpty() && !dobText.isEmpty() && lat != null
+                && lon != null) {
             // Parse Date
             SimpleDateFormat format = new SimpleDateFormat("MMM, dd, yyyy");
             Date dob = null;
@@ -82,7 +82,7 @@ public class ManageFriend {
 
     public boolean saveEditFriendChanges(String nameText, String emailText, String dobText, Friend friend, EditText editDateOfBirth, Double lat, Double lon, String id, Context context) {
         if (!nameText.isEmpty() && !emailText.isEmpty() && !dobText.isEmpty()
-                && !lat.toString().isEmpty() && !lon.toString().isEmpty()) {
+                && lat != null && lon != null) {
             // Parse Date
             SimpleDateFormat format = new SimpleDateFormat("MMM, dd, yyyy");
             Date dob = friend.getBirthday();

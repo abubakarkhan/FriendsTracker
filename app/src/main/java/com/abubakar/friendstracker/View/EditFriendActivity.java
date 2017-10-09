@@ -59,8 +59,15 @@ public class EditFriendActivity extends AppCompatActivity {
                 String nameText = editName.getText().toString().trim();
                 String emailText = editEmail.getText().toString().trim();
                 String dobText = editDateOfBirth.getText().toString().trim();
-                Double lat = Double.valueOf(editLat.getText().toString().trim());
-                Double lon = Double.valueOf(editLon.getText().toString().trim());
+                Double lat;
+                Double lon;
+                try {
+                    lat = Double.valueOf(editLat.getText().toString().trim());
+                    lon = Double.valueOf(editLon.getText().toString().trim());
+                } catch (Exception e) {
+                    lat = null;
+                    lon = null;
+                }
                 boolean validChanges = ManageFriend.getInstance().saveEditFriendChanges(nameText,
                         emailText, dobText, friend, editDateOfBirth, lat, lon, id, getApplicationContext());
                 if (validChanges){finish();}
