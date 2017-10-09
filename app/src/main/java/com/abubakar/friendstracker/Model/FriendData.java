@@ -67,10 +67,10 @@ public class FriendData {
     }
 
     public void addSampleFriends() {
-        friendArrayList.add(new Friend("Jon Snow", "jon@email.com", new Date(1989 - 1900, 11, 1), 37.8136, 144.9631, null));
-        friendArrayList.add(new Friend("Tyrion Lannister", "tyrion@email.com", new Date(1988 - 1900, 5, 1), 37.8136, 144.9631, null));
-        friendArrayList.add(new Friend("Eddard Stark", "ned@email.com", new Date(1987 - 1900, 5, 1), 37.8136, 144.9631, null));
-        friendArrayList.add(new Friend("Arya Stark", "arya@email.com", new Date(1995 - 1900, 5, 1), 37.8136, 144.9631, null));
+        friendArrayList.add(new Friend("Jane Doe1", "janedoe1@somedomain.com", new Date(1989 - 1900, 11, 1), 37.8136, 144.9631, null));
+        friendArrayList.add(new Friend("Jane Doe2", "janedoe2@somedomain.com", new Date(1988 - 1900, 5, 1), 37.8136, 144.9631, null));
+        friendArrayList.add(new Friend("John Doe1", "johndoe1@somedomain.com", new Date(1987 - 1900, 5, 1), 37.8136, 144.9631, null));
+        friendArrayList.add(new Friend("John Doe2", "johndoe2@somedomain.com", new Date(1995 - 1900, 5, 1), 37.8136, 144.9631, null));
         friendArrayList.add(new Friend("Sansa Stark", "arya@email.com", new Date(1992 - 1900, 2, 12), 37.8136, 144.9631, null));
         friendArrayList.add(new Friend("Jamie Lannister", "jamie@email.com", new Date(1989 - 1900, 11, 1), 37.8136, 144.9631, null));
 

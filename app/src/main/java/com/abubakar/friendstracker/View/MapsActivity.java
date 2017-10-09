@@ -2,6 +2,7 @@ package com.abubakar.friendstracker.View;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -10,6 +11,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 
@@ -85,7 +87,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 @Override
                 public void onProviderDisabled(String s) {
-
+                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
                 }
             });
         } else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -125,7 +129,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 @Override
                 public void onProviderDisabled(String s) {
-
+                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
                 }
             });
         }
