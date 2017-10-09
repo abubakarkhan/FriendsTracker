@@ -133,9 +133,18 @@ public class MainActivity extends AppCompatActivity {
         importContactsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                readContacts();
+//                readContacts();
+                suggestNow();
             }
         });
+    }
+
+    private void suggestNow() {
+        readContacts();
+//        SharedPreferences preferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+//        Double myLat = Double.valueOf(preferences.getString("lat", "-37.807425"));
+//        Double myLon = Double.valueOf(preferences.getString("lon", "144.963814"));
+
     }
     private void readContacts(){
         Intent contactPickerIntent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
