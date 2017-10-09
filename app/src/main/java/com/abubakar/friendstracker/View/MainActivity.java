@@ -30,6 +30,7 @@ import com.abubakar.friendstracker.SupportCode.ContactDataManager;
 
 public class MainActivity extends AppCompatActivity {
 
+
     private DatabaseHelper myDB;
     private ListView list;
     private FriendListAdapter adapter;

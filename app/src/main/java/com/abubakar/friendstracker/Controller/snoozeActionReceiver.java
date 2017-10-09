@@ -22,12 +22,12 @@ public class snoozeActionReceiver extends BroadcastReceiver {
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         String meetingID = intent.getExtras().getString("meetingID");
         int requestCode = intent.getExtras().getInt("requestCode");
-        snoozeNotification(context, meetingID, requestCode);
+        int min = snoozeNotification(context, meetingID, requestCode);
         manager.cancel(requestCode);
-        Toast.makeText(context, "Snoozed", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "Snoozed for " + min + " minutes", Toast.LENGTH_SHORT).show();
     }
 
-    public void snoozeNotification(Context context, String meetingID, int requestCode) {
+    public int snoozeNotification(Context context, String meetingID, int requestCode) {
         SharedPreferences preferences = context.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         int min = preferences.getInt("snoozeTime", 1);
 
@@ -42,5 +42,7 @@ public class snoozeActionReceiver extends BroadcastReceiver {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(snoozeTime);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+
+        return min;
     }
 }

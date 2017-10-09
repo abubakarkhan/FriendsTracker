@@ -31,6 +31,7 @@ public class MeetingNotificationReceiver extends BroadcastReceiver {
         int requestCode = intent.getExtras().getInt("requestCode");
         String meetingId = intent.getExtras().getString("meetingId");
         Meeting meeting = myDB.getMeeting(meetingId);
+        meetingId = meeting.getMeetingID();
         if (meeting == null) {
             return;
         }

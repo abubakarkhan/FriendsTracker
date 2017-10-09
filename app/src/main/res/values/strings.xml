@@ -23,4 +23,13 @@
     <string name="dismiss">DIMISS</string>
     <string name="cancel_caps">CANCEL</string>
     <string name="snooze">SNOOZE</string>
+    <string-array name="minutes">
+        <item>1 Minute</item>
+        <item>2 Minutes</item>
+        <item>3 Minutes</item>
+        <item>4 Minutes</item>
+        <item>5 Minutes</item>
+    </string-array>
+    <string name="title_activity_maps">Map</string>
+    <string name="loc">Location</string>
 </resources>

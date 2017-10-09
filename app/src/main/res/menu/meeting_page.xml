@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:apps="http://schemas.android.com/tools">
 
     <item
+        android:id="@+id/action_snooze"
+        android:icon="@drawable/icon_snooze"
+        android:title="@string/snooze"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_location"
+        android:icon="@drawable/icon_marker"
+        android:title="@string/loc"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/btn_sortDateDescending"
-        android:checkable="false"
-        android:enabled="true"
         android:title="@string/sort_by_date_desc"
-        android:visible="true" />
+        app:showAsAction="never" />
     <item
         android:id="@+id/btn_sortDateAscending"
-        android:checkable="false"
-        android:enabled="true"
         android:title="@string/sort_by_date_ascending"
-        android:visible="true"/>
+        app:showAsAction="never" />
 </menu>

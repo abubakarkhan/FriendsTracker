@@ -29,16 +29,12 @@ public class FriendData {
     public void addNewFriend(Friend friend) {
         friendArrayList.add(friend);
     }
-    public void addNewFriend(String name, String email){
-        Friend friend = new Friend(name,email);
-        friendArrayList.add(friend);
-    }
 
     public void populateFriendsList(DatabaseHelper db) {
         Cursor cursor = db.getAllFriendData();
         friendArrayList.clear();
         if (cursor.getCount() == 0) {
-            Log.d(TAG, "populatFriendsList: NO DATA IN DB");
+            Log.d(TAG, "populateFriendsList: NO DATA IN DB");
             return;
         }
         while (cursor.moveToNext()) {

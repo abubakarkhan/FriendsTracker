@@ -2,8 +2,10 @@ package com.abubakar.friendstracker.View;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -31,8 +33,9 @@ import java.util.Date;
 public class MeetingActivity extends AppCompatActivity {
 
     private static final String TAG = "MeetingActivity";
-
     private DatabaseHelper myDB;
+    private SharedPreferences preferences;
+    private SharedPreferences.Editor editor;
     private MeetingListAdapter adapter;
     private BottomNavigationView navigation;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -56,10 +59,11 @@ public class MeetingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meeting);
-
         //Database
         myDB = new DatabaseHelper(this);
-
+        //Preferences
+        preferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        editor = preferences.edit();
         //Link UI
         Button addNewMeeting = (Button) findViewById(R.id.addNewMeetingBtn);
         navigation = (BottomNavigationView) findViewById(R.id.navigation_meetings);
@@ -159,6 +163,13 @@ public class MeetingActivity extends AppCompatActivity {
             case R.id.btn_sortDateAscending:
                 MeetingData.getInstance().sortMeetingsByDateAscending();
                 adapter.notifyDataSetChanged();
+                return true;
+            case R.id.action_snooze:
+                getSnoozeTimerDialog();
+                return true;
+            case R.id.action_location:
+                Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+                startActivity(intent);
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -175,5 +186,27 @@ public class MeetingActivity extends AppCompatActivity {
         super.onPause();
         MeetingData.getInstance().saveMeetingDatabase(myDB);
         generateMeetingNotifications();
+    }
+
+    public void getSnoozeTimerDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setIcon(R.drawable.icon_snooze_o);
+        builder.setTitle("Please choose snooze duration");
+        builder.setItems(R.array.minutes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                editor.putInt("snoozeTime", i + 1);
+                editor.apply();
+                Toast.makeText(getApplicationContext(), "Snoozed duration changed to " + (i + 1) + " minutes", Toast.LENGTH_LONG).show();
+                dialogInterface.dismiss();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public void startPlacePickerActivity() {
+
     }
 }
