@@ -16,6 +16,8 @@ public class AddFriendActivity extends AppCompatActivity {
     private EditText name;
     private EditText email;
     private EditText dateOfBirth;
+    private EditText friendLat;
+    private EditText friendLon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,8 @@ public class AddFriendActivity extends AppCompatActivity {
         name = (EditText) findViewById(R.id.nameEditText);
         email = (EditText) findViewById(R.id.emailEditText);
         dateOfBirth = (EditText) findViewById(R.id.birthdayEditText);
+        friendLat = (EditText) findViewById(R.id.add_frn_lat);
+        friendLon = (EditText) findViewById(R.id.add_frn_lon);
         //Button listeners
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,7 +44,9 @@ public class AddFriendActivity extends AppCompatActivity {
                 String nameText = name.getText().toString().trim();
                 String emailText = email.getText().toString().trim();
                 String dobText = dateOfBirth.getText().toString().trim();
-                boolean validData = ManageFriend.getInstance().saveNewFriend(nameText,emailText,dobText,dateOfBirth,getApplicationContext());
+                Double lat = Double.valueOf(friendLat.getText().toString().trim());
+                Double lon = Double.valueOf(friendLon.getText().toString().trim());
+                boolean validData = ManageFriend.getInstance().saveNewFriend(nameText, emailText, dobText, dateOfBirth, lat, lon, getApplicationContext());
                 //Save and go back to main
                 if (validData){finish();}
             }

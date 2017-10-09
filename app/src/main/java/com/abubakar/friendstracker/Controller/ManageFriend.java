@@ -58,8 +58,10 @@ public class ManageFriend {
             meeting.removeFriendFromMeeting(friendRemovedID);
         }
     }
-    public boolean saveNewFriend(String nameText, String emailText, String dobText, EditText dateOfBirth,Context context){
-        if(!nameText.isEmpty() && !emailText.isEmpty() && !dobText.isEmpty()){
+
+    public boolean saveNewFriend(String nameText, String emailText, String dobText, EditText dateOfBirth, Double lat, Double lon, Context context) {
+        if (!nameText.isEmpty() && !emailText.isEmpty() && !dobText.isEmpty() && !lat.toString().isEmpty()
+                && !lon.toString().isEmpty()) {
             // Parse Date
             SimpleDateFormat format = new SimpleDateFormat("MMM, dd, yyyy");
             Date dob = null;
@@ -68,7 +70,7 @@ public class ManageFriend {
             }catch (ParseException e){
                 e.printStackTrace();
             }
-            Friend friend = new Friend(nameText, emailText, dob, null, null, null);
+            Friend friend = new Friend(nameText, emailText, dob, lat, lon, null);
             FriendData.getInstance().addNewFriend(friend);
             Toast.makeText(context, "Friend Added", Toast.LENGTH_SHORT).show();
             return true;
@@ -77,8 +79,10 @@ public class ManageFriend {
             return false;
         }
     }
-    public boolean saveEditFriendChanges(String nameText, String emailText, String dobText, Friend friend, EditText editDateOfBirth, String id, Context context){
-        if(!nameText.isEmpty() && !emailText.isEmpty() && !dobText.isEmpty()){
+
+    public boolean saveEditFriendChanges(String nameText, String emailText, String dobText, Friend friend, EditText editDateOfBirth, Double lat, Double lon, String id, Context context) {
+        if (!nameText.isEmpty() && !emailText.isEmpty() && !dobText.isEmpty()
+                && !lat.toString().isEmpty() && !lon.toString().isEmpty()) {
             // Parse Date
             SimpleDateFormat format = new SimpleDateFormat("MMM, dd, yyyy");
             Date dob = friend.getBirthday();
@@ -96,6 +100,8 @@ public class ManageFriend {
             }else {
                 FriendData.getInstance().getFriendArrayList().get(positionIndex).setBirthday(dob);
             }
+            FriendData.getInstance().getFriendArrayList().get(positionIndex).setLat(lat);
+            FriendData.getInstance().getFriendArrayList().get(positionIndex).setLon(lon);
             //Save and go back to main
             Toast.makeText(context, "Changes Saved", Toast.LENGTH_SHORT).show();
             return true;

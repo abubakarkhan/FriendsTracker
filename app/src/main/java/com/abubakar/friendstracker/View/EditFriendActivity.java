@@ -21,6 +21,8 @@ public class EditFriendActivity extends AppCompatActivity {
     private EditText editName;
     private EditText editEmail;
     private EditText editDateOfBirth;
+    private EditText editLat;
+    private EditText editLon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,8 @@ public class EditFriendActivity extends AppCompatActivity {
         editName = (EditText) findViewById(R.id.editFrientName);
         editEmail = (EditText) findViewById(R.id.editFrientEmail);
         editDateOfBirth = (EditText) findViewById(R.id.editFriendBirthday);
+        editLat = (EditText) findViewById(R.id.edit_frn_lat);
+        editLon = (EditText) findViewById(R.id.edit_frn_lon);
         //Fill up fields with current information
         DateFormat dateFormat = new SimpleDateFormat("MMM, dd, yyyy");
         final Friend friend   = FriendData.getInstance().getFriendByID(id);
@@ -46,7 +50,8 @@ public class EditFriendActivity extends AppCompatActivity {
         }else {
             editDateOfBirth.setText(dateFormat.format(friend.getBirthday()));
         }
-
+        editLat.setText(friend.getLat().toString());
+        editLon.setText(friend.getLon().toString());
         //Button listener
         saveChanges.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,8 +59,10 @@ public class EditFriendActivity extends AppCompatActivity {
                 String nameText = editName.getText().toString().trim();
                 String emailText = editEmail.getText().toString().trim();
                 String dobText = editDateOfBirth.getText().toString().trim();
+                Double lat = Double.valueOf(editLat.getText().toString().trim());
+                Double lon = Double.valueOf(editLon.getText().toString().trim());
                 boolean validChanges = ManageFriend.getInstance().saveEditFriendChanges(nameText,
-                        emailText,dobText,friend,editDateOfBirth,id,getApplicationContext());
+                        emailText, dobText, friend, editDateOfBirth, lat, lon, id, getApplicationContext());
                 if (validChanges){finish();}
             }
         });
